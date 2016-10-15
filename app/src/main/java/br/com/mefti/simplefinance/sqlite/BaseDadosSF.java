@@ -54,11 +54,55 @@ public class BaseDadosSF extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-
+        /*
         sqLiteDatabase.execSQL(String.format("CREATE TABLE %s ( %s INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "%s TEXT NOT NULL UNIQUE,%s TEXT NOT NULL,%s TEXT NOT NULL,%s )",
                 Tabelas.USUARIO, BaseColumns._ID,
                 Usuario.COD_USUARIO, Usuario.NOME, Usuario.SENHA, Usuario.EMAIL
+        ));*/
+
+        sqLiteDatabase.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "%s TEXT NOT NULL UNIQUE," +
+                        "%s TEXT NOT NULL," +
+                        "%s TEXT NOT NULL,%s )",
+                Tabelas.USUARIO, BaseColumns._ID,
+                Usuario.COD_USUARIO, Usuario.NOME, Usuario.SENHA, Usuario.EMAIL
+        ));
+        sqLiteDatabase.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "%s TEXT UNIQUE NOT NULL," +
+                        "%s TEXT NOT NULL," +
+                        "%s TEXT NOT NULL," +
+                        "%s TEXT NOT NULL," +
+                        "%s TEXT NOT NULL" +
+                        "%s CHAR(1) NOT NULL" +
+                        "%s VARCHAR(100) NOT NULL" +
+                        "%s DOUBLE NOT NULL" +
+                        "%s DATETIME NOT NULL" +
+                        "%s CHAR(1) NOT NULL" +
+                        "$s DATETIME NOT NULL" +
+                        "%s DOUBLE NOT NULL" +
+                        "%s VARCHAR(400)%s)",
+                Tabelas.LANCAMENTO, BaseColumns._ID,
+                Lancamento.COD_LANCAMENTO,
+                Lancamento.COD_USUARIO, Referencias.COD_USUARIO,
+                Lancamento.COD_CATEGORIA, Referencias.COD_CATEGORIA,
+                Lancamento.TP_LANCAMENTO,
+                Lancamento.DESCRICAO,
+                Lancamento.VALOR,
+                Lancamento.DATA,
+                Lancamento.REPETIR,
+                Lancamento.PREVISAO_DATA,
+                Lancamento.PREVISAO_VALOR,
+                Lancamento.OBSERVACAO
+        ));
+
+        sqLiteDatabase.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "%s TEXT UNIQUE NOT NULL," +
+                        "%s TEXT NOT NULL, %s)",
+                Tabelas.CATEGORIA, BaseColumns._ID,
+                Categoria.COD_CATEGORIA,
+                Categoria.NOME,
+                Categoria.TP_LANCAMENTO
         ));
 
 

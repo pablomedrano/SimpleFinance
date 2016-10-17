@@ -21,7 +21,8 @@ public class ActivityExtrato extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             try {
                 dados.getDb().beginTransaction();
-                String usuario1 = dados.inserirUsuario(new Usuario(null, "Andres", "abcd", "asd@asd.com"));
+                String usuario1 = dados.inserirUsuario(new Usuario(null, "Andres", "abcd", "asd@asd.com", "1"));
+                String usuario2 = dados.inserirUsuario(new Usuario(null, "Juan", "qwe", "qwe@qwwe.com", "0"));
 
                 dados.getDb().setTransactionSuccessful();
             } finally {

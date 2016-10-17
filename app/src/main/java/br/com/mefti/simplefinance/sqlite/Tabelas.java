@@ -14,6 +14,7 @@ public class Tabelas{
         String NOME = "nome";
         String SENHA = "senha";
         String EMAIL = "email";
+        String ESTADO = "estado";
     }
 
     interface ColunasLancamento{
@@ -32,6 +33,7 @@ public class Tabelas{
 
     interface ColunasCategoria{
         String COD_CATEGORIA = "cod_categoria";
+        String COD_USUARIO = "cod_usuario";
         String NOME = "nome";
         String TP_LANCAMENTO = "tp_lancamento";
     }

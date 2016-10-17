@@ -42,6 +42,7 @@ public final class OperacoesBaseDados {
         valores.put(Tabelas.Usuario.NOME, usuario.nome);
         valores.put(Tabelas.Usuario.SENHA, usuario.senha);
         valores.put(Tabelas.Usuario.EMAIL, usuario.email);
+        valores.put(Tabelas.Usuario.ESTADO, usuario.estado);
 
         return db.insertOrThrow(BaseDadosSF.Tabelas.USUARIO, null, valores) > 0 ? cod_usuario : null;
     }

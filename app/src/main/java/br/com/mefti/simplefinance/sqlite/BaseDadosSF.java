@@ -1,15 +1,17 @@
 package br.com.mefti.simplefinance.sqlite;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.provider.BaseColumns;
+import android.util.Log;
 
-
-import br.com.mefti.simplefinance.sqlite.Tabelas.Usuario;
-import br.com.mefti.simplefinance.sqlite.Tabelas.Lancamento;
-import br.com.mefti.simplefinance.sqlite.Tabelas.Categoria;
+import br.com.mefti.simplefinance.sqlite.ContratoSF.*;
+import br.com.mefti.simplefinance.modelo.*;
 
 
 /**
@@ -21,6 +23,7 @@ public class BaseDadosSF extends SQLiteOpenHelper {
     private static final String NOME_BASE_DADOS = "BDSimpleFinance.db";
     private static final int VERSAO_ATUAL = 1;
     private final Context contexto;
+    SQLiteDatabase db;
 
     interface Tabelas{
         String USUARIO = "usuario";
@@ -56,7 +59,7 @@ public class BaseDadosSF extends SQLiteOpenHelper {
 
 
         sqLiteDatabase.execSQL(String.format("CREATE TABLE %s ( %s INTEGER PRIMARY KEY AUTOINCREMENT," +
-                        "%s TEXT NOT NULL UNIQUE,%s VARCHAR(50) NOT NULL,%s VARCHAR(20) NOT NULL,%s VARCHAR(30) NOT NULL, %s CHAR(1) NOT NULL )",
+                        "%s TEXT NOT NULL UNIQUE,%s VARCHAR(50) NOT NULL,%s VARCHAR(20) NOT NULL,%s VARCHAR(30) NOT NULL UNIQUE, %s CHAR(1) NOT NULL )",
                 Tabelas.USUARIO, BaseColumns._ID,
                 Usuario.COD_USUARIO, Usuario.NOME, Usuario.SENHA, Usuario.EMAIL, Usuario.ESTADO
         ));
@@ -86,4 +89,50 @@ public class BaseDadosSF extends SQLiteOpenHelper {
 
         onCreate(sqLiteDatabase);
     }
+
+    //Inicio Opercacoes Usuario
+    public void inserirUsuario (Usuarios usuarios){
+        db = this.getWritableDatabase();
+        String cod_usuario = Usuario.gerarCodigoUsuario();
+        ContentValues values = new ContentValues();
+        values.put(Usuario.COD_USUARIO, cod_usuario);
+        values.put(Usuario.NOME, usuarios.getNome());
+        values.put(Usuario.SENHA, usuarios.getSenha());
+        values.put(Usuario.EMAIL, usuarios.getEmail());
+        values.put(Usuario.ESTADO, usuarios.getEstado());
+        db.insert(Tabelas.USUARIO, null, values);
+        db.close();
+    }
+
+    public String ObterUsuarioPorEmail (String email){
+        db = this.getReadableDatabase();
+        String result = "not found";
+        String sql = String.format("SELECT %s FROM %s WHERE %s=?",
+                Usuario.NOME, Tabelas.USUARIO, Usuario.EMAIL);
+        String[] selectionArgs = {email};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        Log.d("Email", email);
+        DatabaseUtils.dumpCursor(cursor);
+        if (cursor.moveToFirst()){
+            result=cursor.getString(0);
+        }
+        return result;
+    }
+
+    public String logUsuario (String email){
+        String logPass = "not found";
+        db = this.getReadableDatabase();
+        String sql = String.format("SELECT %s FROM %s WHERE %s=?",
+                Usuario.SENHA, Tabelas.USUARIO, Usuario.EMAIL);
+        String[] selectionArgs = {email};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        DatabaseUtils.dumpCursor(cursor);
+        if (cursor.moveToFirst()){
+            logPass = cursor.getString(0);
+        }
+        return logPass;
+
+    }
+
+
 }

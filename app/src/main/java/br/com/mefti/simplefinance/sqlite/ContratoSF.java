@@ -7,7 +7,7 @@ import java.util.UUID;
  * Clase que estabelece os nomes que vao ser usados na base de dados
  */
 
-public class Tabelas{
+public class ContratoSF {
 
     interface ColunasUsuario{
         String COD_USUARIO = "cod_usuario";
@@ -56,7 +56,7 @@ public class Tabelas{
         }
     }
 
-    private Tabelas(){
+    private ContratoSF(){
 
     }
 }

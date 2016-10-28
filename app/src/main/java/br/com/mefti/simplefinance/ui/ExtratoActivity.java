@@ -1,5 +1,7 @@
 package br.com.mefti.simplefinance.ui;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,12 +16,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import br.com.mefti.simplefinance.R;
+import br.com.mefti.simplefinance.sqlite.BaseDadosSF;
 
 
 public class ExtratoActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, CategoriaFragment.OnFragmentInteractionListener, RecDesFragment.OnFragmentInteractionListener {
+
+    BaseDadosSF dados = new BaseDadosSF(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +108,14 @@ public class ExtratoActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_Desconectar) {
+            Cursor cursor = dados.ObterUsuarioConectado();
+            if (cursor.moveToFirst()){
+                //Toast.makeText(getApplicationContext(), cursor.getString(1), Toast.LENGTH_LONG).show();
+                Cursor cursor1 = dados.DesconectarUsuarioPorCod(cursor.getString(1));
+                Intent i = new Intent(ExtratoActivity.this, LoginActivity.class);
+                startActivity(i);
+            }
 
         }
         if (fragmentTransation){

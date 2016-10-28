@@ -3,6 +3,7 @@ package br.com.mefti.simplefinance.ui;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -430,14 +431,17 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-
+            //Inicio inserir usuario
             Usuarios usuarios = new Usuarios();
             usuarios.setNome(mName);
             usuarios.setEmail(mEmail);
             usuarios.setSenha(mPassword);
             usuarios.setEstado("1");
-
             dados.inserirUsuario(usuarios);
+
+            Intent i = new Intent(RegisterActivity.this, ExtratoActivity.class);
+            startActivity(i);
+            //fin inserir usuario
             return true;
         }
 

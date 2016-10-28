@@ -3,6 +3,7 @@ package br.com.mefti.simplefinance.ui;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -20,7 +21,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -112,6 +112,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
+        //consulta para controlar se o usuario esta logado
+        Cursor cursor = dados.ObterUsuarioConectado();
+        if (cursor.moveToFirst()){
+            if(cursor.getString(5).equals("1")){
+                Intent i1 = new Intent(LoginActivity.this, ExtratoActivity.class);
+                startActivity(i1);
+            }
+        }
 
 
     }
@@ -212,9 +220,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
+        String password = "";
         String mpassword = mPasswordView.getText().toString();
-        String password = dados.logUsuario(email);
+        Cursor cursor = dados.logUsuario(email);
+        if (cursor.moveToFirst()){
+            password = cursor.getString(3);
+        }
         if(mpassword.equals(password) && email.contains("@")){
+            Cursor cursor1 = dados.ConectarUsuarioPorCod(cursor.getString(1));
             return true;
         }
         else {

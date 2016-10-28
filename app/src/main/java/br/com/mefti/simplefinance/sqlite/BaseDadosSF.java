@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.provider.BaseColumns;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import br.com.mefti.simplefinance.sqlite.ContratoSF.*;
@@ -119,19 +120,49 @@ public class BaseDadosSF extends SQLiteOpenHelper {
         return result;
     }
 
-    public String logUsuario (String email){
-        String logPass = "not found";
+    public Cursor logUsuario (String email){
         db = this.getReadableDatabase();
-        String sql = String.format("SELECT %s FROM %s WHERE %s=?",
-                Usuario.SENHA, Tabelas.USUARIO, Usuario.EMAIL);
+        String sql = String.format("SELECT * FROM %s WHERE %s=?",
+                Tabelas.USUARIO, Usuario.EMAIL);
         String[] selectionArgs = {email};
         Cursor cursor = db.rawQuery(sql, selectionArgs);
         DatabaseUtils.dumpCursor(cursor);
-        if (cursor.moveToFirst()){
-            logPass = cursor.getString(0);
-        }
-        return logPass;
+        return cursor;
 
+    }
+
+    public Cursor ObterUsuarioConectado(){
+        db = this.getReadableDatabase();
+        String estado = "1";
+        String sql = String.format("SELECT * FROM %s WHERE %s=?",
+                Tabelas.USUARIO, Usuario.ESTADO);
+        String[] selectionArgs = {estado};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        return cursor;
+    }
+
+    public Cursor DesconectarUsuarioPorCod(String cod_usuario){
+        db = this.getWritableDatabase();
+        String nEstado = "0";
+        String sql = String.format("UPDATE %s SET %s = %s WHERE %s=?",
+                Tabelas.USUARIO, Usuario.ESTADO, nEstado, Usuario.COD_USUARIO);
+        String[] selectionArgs = {cod_usuario};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        Log.d("Usuario", "Usuario");
+        DatabaseUtils.dumpCursor(cursor);
+        return cursor;
+    }
+
+    public Cursor ConectarUsuarioPorCod(String cod_usuario){
+        db = this.getWritableDatabase();
+        String nEstado = "1";
+        String sql = String.format("UPDATE %s SET %s = %s WHERE %s=?",
+                Tabelas.USUARIO, Usuario.ESTADO, nEstado, Usuario.COD_USUARIO);
+        String[] selectionArgs = {cod_usuario};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        Log.d("Usuario", "Usuario");
+        DatabaseUtils.dumpCursor(cursor);
+        return cursor;
     }
 
 

@@ -192,7 +192,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView = mEmailView;
             cancel = true;
         } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
+            mEmailView.setError(getString(R.string.error_login));
             focusView = mEmailView;
             cancel = true;
         }
@@ -334,7 +334,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-            Intent i = new Intent(LoginActivity.this, ActivityExtrato.class);
+            Intent i = new Intent(LoginActivity.this, ExtratoActivity.class);
             startActivity(i);
             // TODO: register the new account here.
             return true;

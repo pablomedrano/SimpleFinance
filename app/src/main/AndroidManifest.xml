@@ -34,6 +34,18 @@
         <activity
             android:name=".ui.ExtratoActivity"
             android:label="@string/title_activity_extrato"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.RecDesActivity"
+            android:label="@string/title_activity_rec_des"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.CategoriaActivity"
+            android:label="@string/title_activity_categoria"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.CategoriaRegActivity"
+            android:label="@string/title_activity_categoria_reg"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

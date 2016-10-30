@@ -16,16 +16,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import br.com.mefti.simplefinance.R;
 import br.com.mefti.simplefinance.sqlite.BaseDadosSF;
 
 
 public class ExtratoActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, CategoriaFragment.OnFragmentInteractionListener, RecDesFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     BaseDadosSF dados = new BaseDadosSF(this);
+    TextView navBartexto1;
+    TextView navBartexto2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class ExtratoActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +45,7 @@ public class ExtratoActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
+        */
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -51,16 +55,30 @@ public class ExtratoActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Modificando texview cabecera nav bar
+        String s1 = "";
+        String s2 = "";
+        Cursor cursor = dados.ObterUsuarioConectado();
+        if(cursor.moveToFirst()){
+            s1 = cursor.getString(2);
+            s2 = cursor.getString(4);
+        }
+        View hView = navigationView.getHeaderView(0);
+        navBartexto1=(TextView)hView.findViewById(R.id.navBartexto1);
+        navBartexto2=(TextView)hView.findViewById(R.id.navBartexto2);
+        navBartexto1.setText(s1);
+        navBartexto2.setText(s2);
     }
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        //Sai da aplicacao quando e pulsado o botao voltar
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
     }
 
     @Override
@@ -91,17 +109,12 @@ public class ExtratoActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        Fragment fragment = null;
-        boolean fragmentTransation = false;
-
-
         if (id == R.id.nav_RecDes) {
-            // Handle the camera action
-            fragment = new RecDesFragment();
-            fragmentTransation = true;
+            Intent register = new Intent(ExtratoActivity.this, RecDesActivity.class);
+            startActivity(register);
         } else if (id == R.id.nav_Categoria) {
-            fragment = new CategoriaFragment();
-            fragmentTransation = true;
+            Intent register = new Intent(ExtratoActivity.this, CategoriaActivity.class);
+            startActivity(register);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
@@ -118,19 +131,10 @@ public class ExtratoActivity extends AppCompatActivity
             }
 
         }
-        if (fragmentTransation){
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_extrato, fragment).commit();
-            item.setChecked(true);
-            getSupportActionBar().setTitle(item.getTitle());
-        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
 }

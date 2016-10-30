@@ -91,7 +91,7 @@ public class BaseDadosSF extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    //Inicio Opercacoes Usuario
+    //Inicio Operacoes Usuario
     public void inserirUsuario (Usuarios usuarios){
         db = this.getWritableDatabase();
         String cod_usuario = Usuario.gerarCodigoUsuario();
@@ -164,6 +164,21 @@ public class BaseDadosSF extends SQLiteOpenHelper {
         DatabaseUtils.dumpCursor(cursor);
         return cursor;
     }
+    //fin Operacoes Usuario
+
+    //Inicio Operacoes Categoria
+    public void inserirCategoria (Categorias categorias){
+        db = this.getWritableDatabase();
+        String cod_categoria = Categoria.gerarCodigoCategoria();
+        ContentValues values = new ContentValues();
+        values.put(Categoria.COD_CATEGORIA, cod_categoria);
+        values.put(Categoria.COD_USUARIO, categorias.getCod_usuario());
+        values.put(Categoria.NOME, categorias.getNome());
+        values.put(Categoria.TP_LANCAMENTO, categorias.getTp_lancamento());
+        db.insert(Tabelas.CATEGORIA, null, values);
+        db.close();
+    }
+    //Fin Operacoes Categoria
 
 
 }

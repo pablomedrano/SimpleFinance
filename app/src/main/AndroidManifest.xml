@@ -36,7 +36,7 @@
             android:label="@string/title_activity_extrato"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.RecDesActivity"
+            android:name=".ui.LancamentoActivity"
             android:label="@string/title_activity_rec_des"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

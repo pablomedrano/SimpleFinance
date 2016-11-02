@@ -11,6 +11,8 @@ import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import br.com.mefti.simplefinance.sqlite.ContratoSF.*;
 import br.com.mefti.simplefinance.modelo.*;
 
@@ -178,7 +180,29 @@ public class BaseDadosSF extends SQLiteOpenHelper {
         db.insert(Tabelas.CATEGORIA, null, values);
         db.close();
     }
+
+    public ArrayList<String> ObterNomeCategoriaPorCodUsuarioETipo(String cod_user, String tp_lancamento){
+        ArrayList<String> list = new ArrayList<>();
+        db = this.getReadableDatabase();
+        String sql = String.format("SELECT * FROM %s WHERE %s=? AND %s=?",
+                Tabelas.CATEGORIA, Categoria.COD_USUARIO, Categoria.TP_LANCAMENTO);
+        String[] selectionArgs = {cod_user, tp_lancamento};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        Log.d("Lancamento", "Lancamento");
+        DatabaseUtils.dumpCursor(cursor);
+        db.close();
+        if (cursor.getCount() > 0){
+            while (cursor.moveToNext()){
+                String lancamento = cursor.getString(cursor.getColumnIndex(Categoria.NOME));
+                list.add(lancamento);
+            }
+        }
+        return list;
+    }
     //Fin Operacoes Categoria
+
+    //Inicio Operacoes Lancamento
+
 
 
 }

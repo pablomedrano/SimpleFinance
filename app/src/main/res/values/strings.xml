@@ -34,4 +34,13 @@
     <string name="title_activity_rec_des">RecDesActivity</string>
     <string name="title_activity_categoria">CategoriaActivity</string>
     <string name="title_activity_categoria_reg">CategoriaRegActivity</string>
+
+    <string-array name="array_repetir">
+        <item>So uma vez</item>
+        <item>Mensalmente</item>
+        <item>Cada 3 meses</item>
+        <item>Semestralmente</item>
+        <item>Anualmente</item>
+    </string-array>
+
 </resources>

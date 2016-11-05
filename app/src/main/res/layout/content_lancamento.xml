@@ -107,14 +107,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Data: " />
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/texto_data_lancamento"
-            android:hint="16/04/1980"/>
+            android:id="@+id/texto_data_lancamento" />
     </LinearLayout>
 
     <!-- Repetir -->
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -122,7 +122,8 @@
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/repetir_lancamento" />
+        android:id="@+id/repetir_lancamento"
+        android:entries="@array/array_repetir"/>
 
     <!-- Previsao -->
     <TextView
@@ -155,11 +156,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Data: " />
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/texto_data_prevista_lancamento"
-            android:hint="16/04/1980"/>
+            android:id="@+id/texto_data_prevista_lancamento" />
     </LinearLayout>
 
     <!-- Observacao -->

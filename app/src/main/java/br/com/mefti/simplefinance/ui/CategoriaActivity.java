@@ -11,6 +11,7 @@ import android.view.View;
 import br.com.mefti.simplefinance.R;
 
 public class CategoriaActivity extends AppCompatActivity {
+    public static final String EXTRA_CATEGORIA_ID = "extra_categoria_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,16 @@ public class CategoriaActivity extends AppCompatActivity {
                 startActivity(register);
             }
         });
+
+        CategoriaFragment fragment = (CategoriaFragment) getSupportFragmentManager().findFragmentById(R.id.categoria_container);
+        if (fragment == null){
+            fragment = CategoriaFragment.newInstance();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.categoria_container, fragment)
+                    .commit();
+
+        }
     }
 
 }

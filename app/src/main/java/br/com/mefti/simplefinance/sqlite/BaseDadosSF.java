@@ -23,7 +23,7 @@ import br.com.mefti.simplefinance.modelo.*;
  */
 
 public class BaseDadosSF extends SQLiteOpenHelper {
-    private static final String NOME_BASE_DADOS = "BDSimpleFinance.db";
+    public static final String NOME_BASE_DADOS = "BDSimpleFinance.db";
     private static final int VERSAO_ATUAL = 1;
     private final Context contexto;
     SQLiteDatabase db;
@@ -69,7 +69,7 @@ public class BaseDadosSF extends SQLiteOpenHelper {
 
         sqLiteDatabase.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "%s TEXT UNIQUE NOT NULL, %s TEXT NOT NULL %s, %s TEXT NOT NULL %s, %s CHAR(1) NOT NULL, " +
-                "%s VARCHAR(100) NOT NULL, %s DOUBLE NOT NULL, %s DATETIME NOT NULL, %s CHAR(1) NOT NULL, %s DATETIME, " +
+                "%s VARCHAR(100) NOT NULL, %s DOUBLE, %s DATETIME, %s CHAR(1) NOT NULL, %s DATETIME, " +
                 "%s DOUBLE, %s VARCHAR(400))",
                 Tabelas.LANCAMENTO, BaseColumns._ID,
                 Lancamento.COD_LANCAMENTO, Lancamento.COD_USUARIO, Referencias.COD_USUARIO, Lancamento.COD_CATEGORIA, Referencias.COD_CATEGORIA, Lancamento.TP_LANCAMENTO,
@@ -199,10 +199,75 @@ public class BaseDadosSF extends SQLiteOpenHelper {
         }
         return list;
     }
+
+    public String ObterCodCategoriaPorNome (String nome) {
+        db = this.getReadableDatabase();
+        String result="";
+        String sql = String.format("SELECT %s FROM %s WHERE %s=?",
+                Categoria.COD_CATEGORIA, Tabelas.CATEGORIA, Categoria.NOME);
+        String[] selectionArgs = {nome};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        Log.d("Nome categoria", "Nome categoria");
+        DatabaseUtils.dumpCursor(cursor);
+        db.close();
+        if (cursor.moveToFirst()) {
+            result = cursor.getString(0);
+        }
+        return result;
+    }
+
+    public Cursor ObterTodasAsCategoriasPorUsuario(String cod_usuario){
+        db = this.getReadableDatabase();
+        String sql = String.format("SELECT * FROM %s WHERE %s=?",
+                Tabelas.CATEGORIA, Categoria.COD_USUARIO);
+        String[] selectionArgs = {cod_usuario};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        Log.d("Categorias", "Categorias");
+        DatabaseUtils.dumpCursor(cursor);
+        db.close();
+        return cursor;
+    }
+
     //Fin Operacoes Categoria
 
     //Inicio Operacoes Lancamento
+    public void inserirLancamento (Lancamentos lancamentos){
+        db = this.getWritableDatabase();
+        String cod_lancamento = Lancamento.gerarCodigoLancamento();
+        ContentValues values = new ContentValues();
+        values.put(Lancamento.COD_LANCAMENTO, cod_lancamento);
+        values.put(Lancamento.COD_USUARIO, lancamentos.getCod_usuario());
+        values.put(Lancamento.COD_CATEGORIA, lancamentos.getCod_categoria());
+        values.put(Lancamento.TP_LANCAMENTO, lancamentos.getTp_lancamento());
+        values.put(Lancamento.DESCRICAO, lancamentos.getDescricao());
+        values.put(Lancamento.VALOR, lancamentos.getValor());
+        values.put(Lancamento.DATA, String.valueOf(lancamentos.getData()));
+        values.put(Lancamento.REPETIR, lancamentos.getRepetir());
+        values.put(Lancamento.PREVISAO_DATA, String.valueOf(lancamentos.getPrevisao_data()));
+        values.put(Lancamento.PREVISAO_VALOR, lancamentos.getPrevisao_valor());
+        values.put(Lancamento.OBSERVACAO, lancamentos.getObservacao());
 
+        db.insert(Tabelas.LANCAMENTO, null, values);
+        db.close();
+    }
+
+    public String VerificarDescricaLancamento (String descricao){
+        db = this.getReadableDatabase();
+        String result = "not found";
+        String sql = String.format("SELECT * FROM %s WHERE %s=?",
+                Tabelas.LANCAMENTO, Lancamento.DESCRICAO);
+        String[] selectionArgs = {descricao};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        Log.d("Lancamentos", "Lancamentos");
+        DatabaseUtils.dumpCursor(cursor);
+        if (cursor.moveToFirst()){
+            result=cursor.getString(0);
+        }
+        return result;
+    }
+
+
+    //Fin Operacoes Lancamento
 
 
 }

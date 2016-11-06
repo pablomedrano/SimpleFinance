@@ -3,17 +3,21 @@ package br.com.mefti.simplefinance.ui;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import br.com.mefti.simplefinance.R;
+import br.com.mefti.simplefinance.modelo.Lancamentos;
 import br.com.mefti.simplefinance.sqlite.BaseDadosSF;
 import br.com.mefti.simplefinance.sqlite.ContratoSF;
 
@@ -52,8 +56,11 @@ public class CategoriaFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Cursor currentItem = (Cursor) mCategoriaAdapter.getItem(i);
-                String currentLawyerId = currentItem.getString(
-                        currentItem.getColumnIndex(ContratoSF.Lancamento.COD_LANCAMENTO));
+                Log.d("Cursor", "Cursor");
+                DatabaseUtils.dumpCursor(currentItem);
+                String currentCategoriaId = currentItem.getString(currentItem.getColumnIndex(ContratoSF.Categoria.COD_CATEGORIA));
+                Toast.makeText(getActivity(), currentCategoriaId, Toast.LENGTH_SHORT).show();
+
 
                 //showDetailScreen(currentLawyerId);
             }

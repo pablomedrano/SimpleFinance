@@ -46,6 +46,10 @@
         <activity
             android:name=".ui.CategoriaRegActivity"
             android:label="@string/title_activity_categoria_reg"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.CategoriaEditarRemoverActivity"
+            android:label="@string/title_activity_categoria_atualizar_remover"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

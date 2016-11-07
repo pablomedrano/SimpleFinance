@@ -42,5 +42,7 @@
         <item>Semestralmente</item>
         <item>Anualmente</item>
     </string-array>
+    <string name="title_activity_categoria_atualizar_remover">CategoriaAtualizarRemoverActivity
+    </string>
 
 </resources>

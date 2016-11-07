@@ -228,6 +228,33 @@ public class BaseDadosSF extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor ObterCategoriaPorCodCategoria(String cod_categoria){
+        db = this. getReadableDatabase();
+        String sql = String.format("SELECT * FROM %s WHERE %s=?",
+                Tabelas.CATEGORIA, Categoria.COD_CATEGORIA);
+        String[] selectionArgs = {cod_categoria};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        Log.d("Categoria", "Categoria");
+        DatabaseUtils.dumpCursor(cursor);
+        db.close();
+        return cursor;
+    }
+
+    public void UpdateCategoriaPorCodCategoria(String cod_categoria, String nome, String tipo){
+        db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Categoria.NOME, nome);
+        values.put(Categoria.TP_LANCAMENTO, tipo);
+
+        db.update(Tabelas.CATEGORIA, values, Categoria.COD_CATEGORIA+"=?", new String[]{cod_categoria});
+        db.close();
+    }
+
+    public void EliminarCategoriaPorCodCategoria (String cod_categoria){
+        db = this.getWritableDatabase();
+        db.delete(Tabelas.CATEGORIA, Lancamento.COD_CATEGORIA+"=?", new String[]{cod_categoria});
+        db.close();
+    }
     //Fin Operacoes Categoria
 
     //Inicio Operacoes Lancamento
@@ -266,6 +293,11 @@ public class BaseDadosSF extends SQLiteOpenHelper {
         return result;
     }
 
+    public void EliminarLancamentoPorCodCategoria (String cod_categoria){
+        db = this.getWritableDatabase();
+        db.delete(Tabelas.LANCAMENTO, Lancamento.COD_CATEGORIA+"=?", new String[]{cod_categoria});
+        db.close();
+    }
 
     //Fin Operacoes Lancamento
 

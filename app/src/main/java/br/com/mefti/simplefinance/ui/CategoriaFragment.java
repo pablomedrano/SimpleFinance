@@ -23,6 +23,7 @@ import br.com.mefti.simplefinance.sqlite.ContratoSF;
 
 
 public class CategoriaFragment extends Fragment {
+    public static final int REQUEST_UPDATE_DELETE_CATEGORIA = 2;
     private BaseDadosSF dados;
 
     private ListView mCategoriaList;
@@ -59,10 +60,8 @@ public class CategoriaFragment extends Fragment {
                 Log.d("Cursor", "Cursor");
                 DatabaseUtils.dumpCursor(currentItem);
                 String currentCategoriaId = currentItem.getString(currentItem.getColumnIndex(ContratoSF.Categoria.COD_CATEGORIA));
-                Toast.makeText(getActivity(), currentCategoriaId, Toast.LENGTH_SHORT).show();
-
-
-                //showDetailScreen(currentLawyerId);
+                //Toast.makeText(getActivity(), currentCategoriaId, Toast.LENGTH_SHORT).show();
+                showDetailScreen(currentCategoriaId);
             }
         });
         mAddButton.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +75,7 @@ public class CategoriaFragment extends Fragment {
 
         //getActivity().deleteDatabase(BaseDadosSF.NOME_BASE_DADOS);
 
-        // Instancia de helper
+        // Instancia da base de dados
         dados = new BaseDadosSF(getActivity());
 
         // Carga de datos
@@ -114,6 +113,12 @@ public class CategoriaFragment extends Fragment {
                 // Mostrar empty state
             }
         }
+    }
+
+    private void showDetailScreen(String cod_categoria) {
+        Intent intent = new Intent(getActivity(), CategoriaEditarRemoverActivity.class);
+        intent.putExtra("cod_categoria", cod_categoria);
+        startActivityForResult(intent,REQUEST_UPDATE_DELETE_CATEGORIA);
     }
 
 }

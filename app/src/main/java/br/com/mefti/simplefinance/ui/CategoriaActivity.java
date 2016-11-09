@@ -40,4 +40,10 @@ public class CategoriaActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent extrato = new Intent(CategoriaActivity.this, ExtratoActivity.class);
+        startActivity(extrato);
+    }
+
 }

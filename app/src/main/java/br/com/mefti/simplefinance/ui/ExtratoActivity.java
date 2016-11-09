@@ -1,8 +1,12 @@
 package br.com.mefti.simplefinance.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +16,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.TabHost;
 import android.widget.TextView;
 
 import br.com.mefti.simplefinance.R;
@@ -65,6 +72,29 @@ public class ExtratoActivity extends AppCompatActivity
         navBartexto2=(TextView)hView.findViewById(R.id.navBartexto2);
         navBartexto1.setText(s1);
         navBartexto2.setText(s2);
+
+        //Adicionando Tabs
+        Resources res = getResources();
+
+        TabHost tabs=(TabHost)findViewById(android.R.id.tabhost);
+        tabs.setup();
+
+        TabHost.TabSpec spec=tabs.newTabSpec("mitab1");
+        spec.setContent(R.id.tab1);
+        spec.setIndicator("EXTRATO");
+        tabs.addTab(spec);
+
+        spec=tabs.newTabSpec("mitab2");
+        spec.setContent(R.id.tab2);
+        spec.setIndicator("RECEITAS");
+        tabs.addTab(spec);
+
+        spec=tabs.newTabSpec("mitab3");
+        spec.setContent(R.id.tab3);
+        spec.setIndicator("DESPESAS");
+        tabs.addTab(spec);
+
+        tabs.setCurrentTab(0);
     }
 
     @Override
@@ -92,7 +122,7 @@ public class ExtratoActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.extrato_filtrar) {
             return true;
         }
 

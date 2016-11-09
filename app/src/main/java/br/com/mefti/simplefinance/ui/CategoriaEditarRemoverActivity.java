@@ -51,6 +51,11 @@ public class CategoriaEditarRemoverActivity extends AppCompatActivity {
         }
 
     }
+    @Override
+    public void onBackPressed() {
+        Intent extrato = new Intent(CategoriaEditarRemoverActivity.this, CategoriaActivity.class);
+        startActivity(extrato);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -120,6 +120,7 @@ public class BaseDadosSF extends SQLiteOpenHelper {
             result=cursor.getString(0);
         }
         return result;
+
     }
 
     public Cursor logUsuario (String email){

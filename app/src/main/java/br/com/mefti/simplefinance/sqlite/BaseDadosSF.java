@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import br.com.mefti.simplefinance.sqlite.ContratoSF.*;
 import br.com.mefti.simplefinance.modelo.*;
+import br.com.mefti.simplefinance.ui.ExtratoDespesasCursorAdapter;
 
 
 /**
@@ -298,6 +299,19 @@ public class BaseDadosSF extends SQLiteOpenHelper {
         db = this.getWritableDatabase();
         db.delete(Tabelas.LANCAMENTO, Lancamento.COD_CATEGORIA+"=?", new String[]{cod_categoria});
         db.close();
+    }
+
+    public Cursor ObterTodasAsDespesasPorUsuario (String cod_usuario){
+        db = this.getReadableDatabase();
+        String tp_lancamento = "d";
+        String sql = String.format("SELECT * FROM %s WHERE %s=? AND %s=?",
+                Tabelas.LANCAMENTO, Lancamento.COD_USUARIO, Lancamento.TP_LANCAMENTO);
+        String[] selectionArgs = {cod_usuario, tp_lancamento};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        Log.d("Despesas", "Despesas");
+        DatabaseUtils.dumpCursor(cursor);
+        db.close();
+        return cursor;
     }
 
     //Fin Operacoes Lancamento

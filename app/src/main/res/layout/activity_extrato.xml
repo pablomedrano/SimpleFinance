@@ -22,6 +22,8 @@
         app:headerLayout="@layout/nav_header_extrato"
         app:menu="@menu/activity_extrato_drawer" />
 
+
 </android.support.v4.widget.DrawerLayout>
+
 
 

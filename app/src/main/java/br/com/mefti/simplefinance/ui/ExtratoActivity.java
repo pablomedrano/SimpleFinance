@@ -7,6 +7,9 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTabHost;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -32,6 +35,11 @@ public class ExtratoActivity extends AppCompatActivity
     TextView navBartexto1;
     TextView navBartexto2;
 
+    // Fragment TabHost as mTabHost
+    private FragmentTabHost mTabHost;
+
+    public static final String EXTRA_DESPESA_ID = "extra_despesa_id";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +47,8 @@ public class ExtratoActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.add_lancamento);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,7 +56,7 @@ public class ExtratoActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
-        */
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -74,27 +82,24 @@ public class ExtratoActivity extends AppCompatActivity
         navBartexto2.setText(s2);
 
         //Adicionando Tabs
-        Resources res = getResources();
+        mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
+        mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
+        mTabHost.addTab(mTabHost.newTabSpec("extrato").setIndicator("Extrato"), ExtratoFragment.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("extrato_despesas").setIndicator("Despesas"), ExtratoDespesasFragment.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("extrato_receitas").setIndicator("Receitas"), ExtratoReceitasFragment.class, null);
 
-        TabHost tabs=(TabHost)findViewById(android.R.id.tabhost);
-        tabs.setup();
+        //Insertando fragmentos
+        ExtratoDespesasFragment despesasFragment = (ExtratoDespesasFragment) getSupportFragmentManager().findFragmentById(R.id.extrato_container);
+        if (despesasFragment == null){
+            despesasFragment = ExtratoDespesasFragment.newInstance();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.extrato_container, despesasFragment)
+                    .commit();
+        }
 
-        TabHost.TabSpec spec=tabs.newTabSpec("mitab1");
-        spec.setContent(R.id.tab1);
-        spec.setIndicator("EXTRATO");
-        tabs.addTab(spec);
 
-        spec=tabs.newTabSpec("mitab2");
-        spec.setContent(R.id.tab2);
-        spec.setIndicator("RECEITAS");
-        tabs.addTab(spec);
 
-        spec=tabs.newTabSpec("mitab3");
-        spec.setContent(R.id.tab3);
-        spec.setIndicator("DESPESAS");
-        tabs.addTab(spec);
-
-        tabs.setCurrentTab(0);
     }
 
     @Override

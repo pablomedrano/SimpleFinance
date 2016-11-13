@@ -304,8 +304,21 @@ public class BaseDadosSF extends SQLiteOpenHelper {
     public Cursor ObterTodasAsDespesasPorUsuario (String cod_usuario){
         db = this.getReadableDatabase();
         String tp_lancamento = "d";
-        String sql = String.format("SELECT * FROM %s WHERE %s=? AND %s=?",
-                Tabelas.LANCAMENTO, Lancamento.COD_USUARIO, Lancamento.TP_LANCAMENTO);
+        String sql = String.format("SELECT * FROM %s WHERE %s=? AND %s=? ORDER BY %s ASC",
+                Tabelas.LANCAMENTO, Lancamento.COD_USUARIO, Lancamento.TP_LANCAMENTO, Lancamento.DATA);
+        String[] selectionArgs = {cod_usuario, tp_lancamento};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        Log.d("Despesas", "Despesas");
+        DatabaseUtils.dumpCursor(cursor);
+        db.close();
+        return cursor;
+    }
+
+    public Cursor ObterTodasAsReceitasPorUsuario (String cod_usuario){
+        db = this.getReadableDatabase();
+        String tp_lancamento = "r";
+        String sql = String.format("SELECT * FROM %s WHERE %s=? AND %s=? ORDER BY DATE(%s) DESC",
+                Tabelas.LANCAMENTO, Lancamento.COD_USUARIO, Lancamento.TP_LANCAMENTO, Lancamento.DATA);
         String[] selectionArgs = {cod_usuario, tp_lancamento};
         Cursor cursor = db.rawQuery(sql, selectionArgs);
         Log.d("Despesas", "Despesas");

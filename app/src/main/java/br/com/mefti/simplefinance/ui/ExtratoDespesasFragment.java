@@ -1,7 +1,6 @@
 package br.com.mefti.simplefinance.ui;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -12,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import br.com.mefti.simplefinance.R;
 import br.com.mefti.simplefinance.sqlite.BaseDadosSF;
@@ -23,7 +21,6 @@ public class ExtratoDespesasFragment extends Fragment {
 
     private ListView mDespesaList;
     private ExtratoDespesasCursorAdapter mDespesaAdapter;
-    private FloatingActionButton mAddButton;
 
     public ExtratoDespesasFragment() {
         // Required empty public constructor

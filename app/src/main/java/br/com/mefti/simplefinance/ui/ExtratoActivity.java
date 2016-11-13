@@ -1,12 +1,9 @@
 package br.com.mefti.simplefinance.ui;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTabHost;
@@ -19,9 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.TabHost;
 import android.widget.TextView;
 
 import br.com.mefti.simplefinance.R;
@@ -95,6 +89,14 @@ public class ExtratoActivity extends AppCompatActivity
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.extrato_container, despesasFragment)
+                    .commit();
+        }
+        ExtratoReceitasFragment receitasFragment = (ExtratoReceitasFragment) getSupportFragmentManager().findFragmentById(R.id.extrato_container);
+        if (receitasFragment == null){
+            receitasFragment = ExtratoReceitasFragment.newInstance();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.extrato_container, receitasFragment)
                     .commit();
         }
 

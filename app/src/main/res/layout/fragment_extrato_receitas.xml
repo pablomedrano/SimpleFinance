@@ -4,11 +4,10 @@
     android:layout_height="match_parent"
     tools:context="br.com.mefti.simplefinance.ui.ExtratoReceitasFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/extrato_receitas_text"
+    <ListView
+        android:id="@+id/extrato_receitas_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Extrato receitas" />
+        android:divider="@null"/>
 
 </FrameLayout>

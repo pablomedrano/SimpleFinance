@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +42,7 @@ public class LancamentoActivity extends AppCompatActivity {
 
     String cod_usuario;
     Date date_vl,date_vlp;
+    long date_vl_long, date_vlp_long;
 
     //variables para calendario
     private TextView editText_vl;
@@ -242,6 +244,7 @@ public class LancamentoActivity extends AppCompatActivity {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+            date_vl_long = date_vl.getTime();
 
             //extraindo posicion do spinner repetir
             Spinner repetir = (Spinner)findViewById(R.id.repetir_lancamento);
@@ -266,13 +269,14 @@ public class LancamentoActivity extends AppCompatActivity {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+            date_vlp_long = date_vlp.getTime();
 
             //extraindo observacao
             EditText observacaoLancamento = (EditText) findViewById(R.id.observacao_lancamento);
             String oLancamento = observacaoLancamento.getText().toString();
 
             //Salvando Lancamento
-            if (dados.VerificarDescricaLancamento(dLancamento)=="not found"){
+            if (!dLancamento.equals("")){
                 if (posicao_repetir == 0){
                     Lancamentos lancamentos = new Lancamentos();
                     lancamentos.setCod_usuario(cod_usuario);
@@ -283,9 +287,9 @@ public class LancamentoActivity extends AppCompatActivity {
                         lancamentos.setTp_lancamento("d");
                     lancamentos.setDescricao(dLancamento);
                     lancamentos.setValor(vLancamento);
-                    lancamentos.setData(date_vl);
+                    lancamentos.setData(date_vl_long);
                     lancamentos.setRepetir(Integer.toString(posicao_repetir));
-                    lancamentos.setPrevisao_data(date_vlp);
+                    lancamentos.setPrevisao_data(date_vlp_long);
                     lancamentos.setPrevisao_valor(vPLancamento);
                     lancamentos.setObservacao(oLancamento);
                     dados.inserirLancamento(lancamentos);
@@ -301,9 +305,9 @@ public class LancamentoActivity extends AppCompatActivity {
                             lancamentos.setTp_lancamento("d");
                         lancamentos.setDescricao(dLancamento);
                         lancamentos.setValor(vLancamento);
-                        lancamentos.setData(date_vl);
+                        lancamentos.setData(date_vl_long);
                         lancamentos.setRepetir(Integer.toString(posicao_repetir));
-                        lancamentos.setPrevisao_data(date_vlp);
+                        lancamentos.setPrevisao_data(date_vlp_long);
                         lancamentos.setPrevisao_valor(vPLancamento);
                         lancamentos.setObservacao(oLancamento);
                         dados.inserirLancamento(lancamentos);
@@ -312,6 +316,7 @@ public class LancamentoActivity extends AppCompatActivity {
                         c.setTime(date_vl);
                         c.add(Calendar.MONTH,+1);
                         date_vl = c.getTime();
+                        date_vl_long = date_vl.getTime();
                     }
                 }
                 if(posicao_repetir == 2){ //cada 3 meses durante 2 anos
@@ -325,9 +330,9 @@ public class LancamentoActivity extends AppCompatActivity {
                             lancamentos.setTp_lancamento("d");
                         lancamentos.setDescricao(dLancamento);
                         lancamentos.setValor(vLancamento);
-                        lancamentos.setData(date_vl);
+                        lancamentos.setData(date_vl_long);
                         lancamentos.setRepetir(Integer.toString(posicao_repetir));
-                        lancamentos.setPrevisao_data(date_vlp);
+                        lancamentos.setPrevisao_data(date_vlp_long);
                         lancamentos.setPrevisao_valor(vPLancamento);
                         lancamentos.setObservacao(oLancamento);
                         dados.inserirLancamento(lancamentos);
@@ -336,6 +341,7 @@ public class LancamentoActivity extends AppCompatActivity {
                         c.setTime(date_vl);
                         c.add(Calendar.MONTH,+3);
                         date_vl = c.getTime();
+                        date_vl_long = date_vl.getTime();
                     }
                 }
 
@@ -350,9 +356,9 @@ public class LancamentoActivity extends AppCompatActivity {
                             lancamentos.setTp_lancamento("d");
                         lancamentos.setDescricao(dLancamento);
                         lancamentos.setValor(vLancamento);
-                        lancamentos.setData(date_vl);
+                        lancamentos.setData(date_vl_long);
                         lancamentos.setRepetir(Integer.toString(posicao_repetir));
-                        lancamentos.setPrevisao_data(date_vlp);
+                        lancamentos.setPrevisao_data(date_vlp_long);
                         lancamentos.setPrevisao_valor(vPLancamento);
                         lancamentos.setObservacao(oLancamento);
                         dados.inserirLancamento(lancamentos);
@@ -361,6 +367,7 @@ public class LancamentoActivity extends AppCompatActivity {
                         c.setTime(date_vl);
                         c.add(Calendar.MONTH,+6);
                         date_vl = c.getTime();
+                        date_vl_long = date_vl.getTime();
                     }
                 }
 
@@ -375,9 +382,9 @@ public class LancamentoActivity extends AppCompatActivity {
                             lancamentos.setTp_lancamento("d");
                         lancamentos.setDescricao(dLancamento);
                         lancamentos.setValor(vLancamento);
-                        lancamentos.setData(date_vl);
+                        lancamentos.setData(date_vl_long);
                         lancamentos.setRepetir(Integer.toString(posicao_repetir));
-                        lancamentos.setPrevisao_data(date_vlp);
+                        lancamentos.setPrevisao_data(date_vlp_long);
                         lancamentos.setPrevisao_valor(vPLancamento);
                         lancamentos.setObservacao(oLancamento);
                         dados.inserirLancamento(lancamentos);
@@ -386,13 +393,14 @@ public class LancamentoActivity extends AppCompatActivity {
                         c.setTime(date_vl);
                         c.add(Calendar.MONTH,+12);
                         date_vl = c.getTime();
+                        date_vl_long = date_vl.getTime();
                     }
                 }
                 Intent extrato = new Intent(LancamentoActivity.this, ExtratoActivity.class);
                 startActivity(extrato);
 
             }else{
-                Toast.makeText(LancamentoActivity.this, "A descricao do lancamento ja existe!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LancamentoActivity.this, "Descricao e valor sao dados obrigratorios", Toast.LENGTH_SHORT).show();
             }
         }
         return super.onOptionsItemSelected(item);

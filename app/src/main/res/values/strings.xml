@@ -44,5 +44,6 @@
     </string-array>
     <string name="title_activity_categoria_atualizar_remover">CategoriaAtualizarRemoverActivity
     </string>
+    <string name="title_activity_lancamento_editar_remover">Editar ou Remover Lancamento</string>
 
 </resources>

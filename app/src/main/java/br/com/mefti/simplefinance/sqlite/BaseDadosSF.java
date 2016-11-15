@@ -70,7 +70,7 @@ public class BaseDadosSF extends SQLiteOpenHelper {
 
         sqLiteDatabase.execSQL(String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "%s TEXT UNIQUE NOT NULL, %s TEXT NOT NULL %s, %s TEXT NOT NULL %s, %s CHAR(1) NOT NULL, " +
-                "%s VARCHAR(100) NOT NULL, %s DOUBLE, %s DATETIME, %s CHAR(1) NOT NULL, %s DATETIME, " +
+                "%s VARCHAR(100) NOT NULL, %s DOUBLE, %s INTEGER, %s CHAR(1) NOT NULL, %s INTEGER, " +
                 "%s DOUBLE, %s VARCHAR(400))",
                 Tabelas.LANCAMENTO, BaseColumns._ID,
                 Lancamento.COD_LANCAMENTO, Lancamento.COD_USUARIO, Referencias.COD_USUARIO, Lancamento.COD_CATEGORIA, Referencias.COD_CATEGORIA, Lancamento.TP_LANCAMENTO,
@@ -257,6 +257,22 @@ public class BaseDadosSF extends SQLiteOpenHelper {
         db.delete(Tabelas.CATEGORIA, Lancamento.COD_CATEGORIA+"=?", new String[]{cod_categoria});
         db.close();
     }
+
+    public String ObterNomeCategoriaPorCodCategoria(String cod_categoria){
+        db = this.getReadableDatabase();
+        String result="";
+        String sql = String.format("SELECT * FROM %s WHERE %s=?",
+                Tabelas.CATEGORIA, Categoria.COD_CATEGORIA);
+        String[] selectionArgs = {cod_categoria};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        Log.d("Nome categoria", "Nome categoria");
+        DatabaseUtils.dumpCursor(cursor);
+        db.close();
+        if (cursor.moveToFirst()) {
+            result = cursor.getString(3);
+        }
+        return result;
+    }
     //Fin Operacoes Categoria
 
     //Inicio Operacoes Lancamento
@@ -317,11 +333,23 @@ public class BaseDadosSF extends SQLiteOpenHelper {
     public Cursor ObterTodasAsReceitasPorUsuario (String cod_usuario){
         db = this.getReadableDatabase();
         String tp_lancamento = "r";
-        String sql = String.format("SELECT * FROM %s WHERE %s=? AND %s=? ORDER BY DATE(%s) DESC",
+        String sql = String.format("SELECT * FROM %s WHERE %s=? AND %s=? ORDER BY %s ASC",
                 Tabelas.LANCAMENTO, Lancamento.COD_USUARIO, Lancamento.TP_LANCAMENTO, Lancamento.DATA);
         String[] selectionArgs = {cod_usuario, tp_lancamento};
         Cursor cursor = db.rawQuery(sql, selectionArgs);
         Log.d("Despesas", "Despesas");
+        DatabaseUtils.dumpCursor(cursor);
+        db.close();
+        return cursor;
+    }
+
+    public Cursor ObterLancamentoPorCodLancamento (String cod_lancamento){
+        db = this.getReadableDatabase();
+        String sql = String.format("SELECT * FROM %s WHERE %s=?",
+                Tabelas.LANCAMENTO, Lancamento.COD_LANCAMENTO);
+        String[] selectionArgs = {cod_lancamento};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        Log.d("Lancamento", "Lancamento");
         DatabaseUtils.dumpCursor(cursor);
         db.close();
         return cursor;

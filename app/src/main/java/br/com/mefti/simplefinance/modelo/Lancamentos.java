@@ -14,9 +14,9 @@ public class Lancamentos {
     public String tp_lancamento;
     public String descricao;
     public double valor;
-    public Date data;
+    public long data;
     public String repetir;
-    public Date previsao_data;
+    public long previsao_data;
     public double previsao_valor;
     public  String observacao;
 
@@ -48,7 +48,7 @@ public class Lancamentos {
         return cod_usuario;
     }
 
-    public Date getData() {
+    public long getData() {
         return data;
     }
 
@@ -60,7 +60,7 @@ public class Lancamentos {
         return observacao;
     }
 
-    public Date getPrevisao_data() {
+    public long getPrevisao_data() {
         return previsao_data;
     }
 
@@ -92,7 +92,7 @@ public class Lancamentos {
         this.cod_usuario = cod_usuario;
     }
 
-    public void setData(Date data) {
+    public void setData(long data) {
         this.data = data;
     }
 
@@ -104,7 +104,7 @@ public class Lancamentos {
         this.observacao = observacao;
     }
 
-    public void setPrevisao_data(Date previsao_data) {
+    public void setPrevisao_data(long previsao_data) {
         this.previsao_data = previsao_data;
     }
 

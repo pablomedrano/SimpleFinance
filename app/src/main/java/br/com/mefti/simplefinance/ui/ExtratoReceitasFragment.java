@@ -3,21 +3,25 @@ package br.com.mefti.simplefinance.ui;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import br.com.mefti.simplefinance.R;
 import br.com.mefti.simplefinance.sqlite.BaseDadosSF;
+import br.com.mefti.simplefinance.sqlite.ContratoSF;
 
 
 public class ExtratoReceitasFragment extends Fragment {
-    public static final int REQUEST_UPDATE_DELETE_DESPESA = 2;
+    public static final int REQUEST_UPDATE_DELETE_RECEITA = 2;
     private BaseDadosSF dados;
 
     private ListView mReceitaList;
@@ -44,6 +48,18 @@ public class ExtratoReceitasFragment extends Fragment {
 
         // Setup
         mReceitaList.setAdapter(mReceitaAdapter);
+
+        //Eventos
+        mReceitaList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Cursor currentItem = (Cursor) mReceitaAdapter.getItem(i);
+                Log.d("Lancamento", "Lancamento");
+                DatabaseUtils.dumpCursor(currentItem);
+                String currentLancamentoId = currentItem.getString(currentItem.getColumnIndex(ContratoSF.Lancamento.COD_LANCAMENTO));
+                showDetailScreen(currentLancamentoId);
+            }
+        });
 
         // Instancia da base de dados
         dados = new BaseDadosSF(getActivity());
@@ -83,6 +99,12 @@ public class ExtratoReceitasFragment extends Fragment {
                 // Mostrar empty state
             }
         }
+    }
+
+    private void showDetailScreen(String cod_lancamento) {
+        Intent intent = new Intent(getActivity(), LancamentoEditarRemoverActivity.class);
+        intent.putExtra("cod_lancamento", cod_lancamento);
+        startActivityForResult(intent,REQUEST_UPDATE_DELETE_RECEITA);
     }
 
 }

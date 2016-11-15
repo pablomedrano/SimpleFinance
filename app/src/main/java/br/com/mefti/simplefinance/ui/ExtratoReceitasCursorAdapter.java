@@ -48,7 +48,7 @@ public class ExtratoReceitasCursorAdapter extends CursorAdapter {
         String descricao = cursor.getString(cursor.getColumnIndex(ContratoSF.Lancamento.DESCRICAO));
         String valor = cursor.getString(cursor.getColumnIndex(ContratoSF.Lancamento.VALOR));
         String categoria = cursor.getString(cursor.getColumnIndex(ContratoSF.Lancamento.COD_CATEGORIA));
-        String data = cursor.getString(cursor.getColumnIndex(ContratoSF.Lancamento.DATA));
+        long data = cursor.getLong(cursor.getColumnIndex(ContratoSF.Lancamento.DATA));
 
 
 
@@ -61,18 +61,15 @@ public class ExtratoReceitasCursorAdapter extends CursorAdapter {
 
 
         //Convertendo data
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy");
-        DateFormat targetFormat = new SimpleDateFormat("dd/MMM/yyyy");
+        Date d = new Date (data);
+        DateFormat targetFormat = new SimpleDateFormat("dd/MMM/y");
         String formattedDate = null;
-        Date convertedDate = new Date();
         try {
-            convertedDate = dateFormat.parse(data);
-            formattedDate = targetFormat.format(convertedDate);
+            formattedDate = targetFormat.format(d);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
 
         //String avatarUri = cursor.getString(cursor.getColumnIndex(LawyerEntry.AVATAR_URI));
 

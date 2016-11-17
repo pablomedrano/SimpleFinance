@@ -113,18 +113,6 @@
             android:id="@+id/texto_data_lancamento_edit_delete" />
     </LinearLayout>
 
-    <!-- Repetir -->
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Repetir" />
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/repetir_lancamento_edit_delete"
-        android:entries="@array/array_repetir"/>
-
     <!-- Previsao -->
     <TextView
         android:layout_width="wrap_content"

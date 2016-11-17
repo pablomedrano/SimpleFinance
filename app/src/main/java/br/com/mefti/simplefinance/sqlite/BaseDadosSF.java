@@ -355,6 +355,29 @@ public class BaseDadosSF extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public void UpdateLancamentoPorCodLancamento(String cod_lancamento, String cod_categoria, String tipo, String descricao, double valor, long data,
+                                                 long dataP, double valorP, String observacao){
+        db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Lancamento.COD_CATEGORIA, cod_categoria);
+        values.put(Lancamento.TP_LANCAMENTO, tipo);
+        values.put(Lancamento.DESCRICAO, descricao);
+        values.put(Lancamento.VALOR, valor);
+        values.put(Lancamento.DATA, data);
+        values.put(Lancamento.PREVISAO_DATA, dataP);
+        values.put(Lancamento.PREVISAO_VALOR, valorP);
+        values.put(Lancamento.OBSERVACAO, observacao);
+
+        db.update(Tabelas.LANCAMENTO, values, Lancamento.COD_LANCAMENTO+"=?", new String[]{cod_lancamento});
+        db.close();
+    }
+
+    public void EliminarLancamentoPorCodLancamento (String cod_lancamento){
+        db = this.getWritableDatabase();
+        db.delete(Tabelas.LANCAMENTO, Lancamento.COD_LANCAMENTO+"=?", new String[]{cod_lancamento});
+        db.close();
+    }
+
     //Fin Operacoes Lancamento
 
 

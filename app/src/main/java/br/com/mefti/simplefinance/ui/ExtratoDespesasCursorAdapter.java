@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -77,7 +78,9 @@ public class ExtratoDespesasCursorAdapter extends CursorAdapter{
 
         // Setup.
         descricaoText.setText(descricao);
-        valorText.setText("Valor: R$ " + valor);
+        DecimalFormat format = new DecimalFormat("0.00");
+        String formattedValor = format.format(Double.parseDouble(valor));
+        valorText.setText("Valor: R$ " + formattedValor);
         categoriaText.setText("Categoria: " + nCategoria);
         dataText.setText("Data: " + formattedDate);
         /*

@@ -378,6 +378,18 @@ public class BaseDadosSF extends SQLiteOpenHelper {
         db.close();
     }
 
+    public Cursor ObterLancamentosPorCodUsuario (String cod_usuario){
+        db = this.getReadableDatabase();
+        String sql = String.format("SELECT * FROM %s WHERE %s=? ORDER BY %s DESC",
+                Tabelas.LANCAMENTO, Lancamento.COD_USUARIO, Lancamento.DATA);
+        String[] selectionArgs = {cod_usuario};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        Log.d("Lancamentos por usuario", "Lancamentos por usuario");
+        DatabaseUtils.dumpCursor(cursor);
+        db.close();
+        return cursor;
+    }
+
     //Fin Operacoes Lancamento
 
 

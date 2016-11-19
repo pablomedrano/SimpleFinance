@@ -1,72 +1,251 @@
 package br.com.mefti.simplefinance.ui;
 
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import br.com.mefti.simplefinance.R;
+import br.com.mefti.simplefinance.sqlite.BaseDadosSF;
+import br.com.mefti.simplefinance.sqlite.ContratoSF;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ExtratoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class ExtratoFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private BaseDadosSF dados;
+    String cod_usuario;
 
+    long dataAtual, dataBD;
+    String dataF, dataF1, dataF2, dataF3, dataF4, dataBDF;
 
     public ExtratoFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ExtratoFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ExtratoFragment newInstance(String param1, String param2) {
-        ExtratoFragment fragment = new ExtratoFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+
+    public static ExtratoFragment newInstance() {
+        return new ExtratoFragment();
     }
 
+
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_extrato, container, false);
+        //Carregando data atual e sutraindo 1 dia de vez durante 5 dias para organizar lancamentos
+        dataAtual = System.currentTimeMillis();
+        dataF = FormatData(dataAtual);
+        dataF1 = FormatData(dataAtual - 86400000);
+        dataF2 = FormatData(dataAtual - 172800000);
+        dataF3 = FormatData(dataAtual - 259200000);
+        dataF4 = FormatData(dataAtual - 345600000);
+
+        //Toast.makeText(getActivity(), dataF1, Toast.LENGTH_SHORT).show();
+
+
+
+
+        // Instancia da base de dados
+        dados = new BaseDadosSF(getActivity());
+        Cursor cursor = dados.ObterUsuarioConectado();
+        if(cursor.moveToFirst()){
+            cod_usuario = cursor.getString(1);
         }
+        Cursor lancamentos  = dados.ObterLancamentosPorCodUsuario(cod_usuario);
+
+        TableLayout tl = (TableLayout) root.findViewById(R.id.tabla1);
+        int cont = 0;
+        int cont1 = 0;
+        int cont2 = 0;
+        int cont3 = 0;
+        int cont4 = 0;
+        double sumDespesas = 0.0;
+        double sumReceitas = 0.0;
+
+        try {
+            while (lancamentos.moveToNext()){
+                dataBD = lancamentos.getLong(lancamentos.getColumnIndex(ContratoSF.Lancamento.DATA));
+                dataBDF = FormatData(dataBD);
+
+                if(dataF.equals(dataBDF) && cont == 0){
+                    TableRow tr = new TableRow(getActivity());
+                    tr.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                    TextView data = new TextView(getActivity());
+                    data.setText(dataBDF);
+                    tr.addView(data);
+                    tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                    cont++;
+                }
+                if(dataF.equals(dataBDF)){
+                    TableRow tr = new TableRow(getActivity());
+                    tr.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
+                    TextView detailstv = new TextView(getActivity());
+                    detailstv.setText(lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.DESCRICAO)));
+                    tr.addView(detailstv);
+
+                    TextView valstv = new TextView(getActivity());
+                    valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                    valstv.setTextColor(Color.parseColor("#0000CC"));
+                    tr.addView(valstv);
+                    tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                }
+
+                if(dataF1.equals(dataBDF) && cont1 == 0){
+                    TableRow tr = new TableRow(getActivity());
+                    tr.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                    TextView data = new TextView(getActivity());
+                    data.setText(dataBDF);
+                    tr.addView(data);
+                    tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                    cont1++;
+                }
+                if(dataF1.equals(dataBDF)){
+                    TableRow tr = new TableRow(getActivity());
+                    tr.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
+                    TextView detailstv = new TextView(getActivity());
+                    detailstv.setText(lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.DESCRICAO)));
+                    tr.addView(detailstv);
+
+                    TextView valstv = new TextView(getActivity());
+                    valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                    valstv.setTextColor(Color.parseColor("#0000CC"));
+                    tr.addView(valstv);
+                    tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                }
+
+                if(dataF2.equals(dataBDF) && cont2 == 0){
+                    TableRow tr = new TableRow(getActivity());
+                    tr.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                    TextView data = new TextView(getActivity());
+                    data.setText(dataBDF);
+                    tr.addView(data);
+                    tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                    cont2++;
+                }
+                if(dataF2.equals(dataBDF)){
+                    TableRow tr = new TableRow(getActivity());
+                    tr.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
+                    TextView detailstv = new TextView(getActivity());
+                    detailstv.setText(lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.DESCRICAO)));
+                    tr.addView(detailstv);
+
+                    TextView valstv = new TextView(getActivity());
+                    valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                    valstv.setTextColor(Color.parseColor("#0000CC"));
+                    tr.addView(valstv);
+                    tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                }
+
+                if(dataF3.equals(dataBDF) && cont3 == 0){
+                    TableRow tr = new TableRow(getActivity());
+                    tr.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                    TextView data = new TextView(getActivity());
+                    data.setText(dataBDF);
+                    tr.addView(data);
+                    tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                    cont3++;
+                }
+                if(dataF3.equals(dataBDF)){
+                    TableRow tr = new TableRow(getActivity());
+                    tr.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
+                    TextView detailstv = new TextView(getActivity());
+                    detailstv.setText(lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.DESCRICAO)));
+                    tr.addView(detailstv);
+
+                    TextView valstv = new TextView(getActivity());
+                    valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                    valstv.setTextColor(Color.parseColor("#0000CC"));
+                    tr.addView(valstv);
+                    tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                }
+
+                if(dataF4.equals(dataBDF) && cont4 == 0){
+                    TableRow tr = new TableRow(getActivity());
+                    tr.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                    TextView data = new TextView(getActivity());
+                    data.setText(dataBDF);
+                    tr.addView(data);
+                    tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                    cont4++;
+                }
+                if(dataF4.equals(dataBDF)){
+                    TableRow tr = new TableRow(getActivity());
+                    tr.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
+                    TextView detailstv = new TextView(getActivity());
+                    detailstv.setText(lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.DESCRICAO)));
+                    tr.addView(detailstv);
+
+                    TextView valstv = new TextView(getActivity());
+                    valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                    valstv.setTextColor(Color.parseColor("#0000CC"));
+                    tr.addView(valstv);
+                    tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                }
+
+                String tipoLancamento = lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.TP_LANCAMENTO));
+                if (tipoLancamento.equals("r")){
+                    sumReceitas += lancamentos.getDouble(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR));
+                }
+                if (tipoLancamento.equals("d")){
+                    sumDespesas += lancamentos.getDouble(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR));
+                }
+            }
+            String saldo = String.valueOf(sumReceitas - sumDespesas);
+            TableRow tr = new TableRow(getActivity());
+            tr.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
+            TextView detailstv = new TextView(getActivity());
+            detailstv.setText("Total");
+            tr.addView(detailstv);
+
+            TextView valstv = new TextView(getActivity());
+            valstv.setText(" R$ " + saldo);
+            valstv.setTextColor(Color.parseColor("#0000CC"));
+            tr.addView(valstv);
+            tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        }finally {
+            lancamentos.close();
+        }
+
+        return root;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_extrato, container, false);
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_extrato, container, false);
-        TextView tv = (TextView) v.findViewById(R.id.extrato_text);
-        tv.setText("Extrato fragment");
-        return v;
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+    }
+
+    private String FormatData(long data){
+        DateFormat targetFormat = new SimpleDateFormat("dd/MMM/y");
+        String formattedDate = null;
+        try {
+            formattedDate = targetFormat.format(data);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return formattedDate;
     }
 
 }

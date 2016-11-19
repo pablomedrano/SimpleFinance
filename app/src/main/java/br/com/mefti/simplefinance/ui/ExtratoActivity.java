@@ -99,6 +99,14 @@ public class ExtratoActivity extends AppCompatActivity
                     .add(R.id.extrato_container, receitasFragment)
                     .commit();
         }
+        ExtratoFragment extratoFragment = (ExtratoFragment) getSupportFragmentManager().findFragmentById(R.id.extrato_container);
+        if (extratoFragment == null){
+            extratoFragment = ExtratoFragment.newInstance();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.extrato_container, extratoFragment)
+                    .commit();
+        }
 
 
 

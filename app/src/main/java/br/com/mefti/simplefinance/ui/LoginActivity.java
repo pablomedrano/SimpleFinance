@@ -70,6 +70,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     BaseDadosSF dados = new BaseDadosSF(this);
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +125,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
     }
+    public void onBackPressed() {
+        //  super.onBackPressed();
+        moveTaskToBack(true);
+    }
+
+
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
@@ -371,6 +379,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
         }
+
     }
+
 }
 

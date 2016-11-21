@@ -39,8 +39,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.mefti.simplefinance.R;
+import br.com.mefti.simplefinance.modelo.Categorias;
 import br.com.mefti.simplefinance.modelo.Usuarios;
 import br.com.mefti.simplefinance.sqlite.BaseDadosSF;
+import br.com.mefti.simplefinance.sqlite.ContratoSF;
 
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -106,6 +108,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             }
         });
 
+        /*
         mRegisterConfirmPasswordView = (EditText) findViewById(R.id.register_confirm_password);
         mRegisterConfirmPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -117,6 +120,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
                 return false;
             }
         });
+        */
 
 
         Button mRegisterEmailSignInButton = (Button) findViewById(R.id.register_button);
@@ -198,7 +202,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         // Store values at the time of the login attempt.
         String registerEmail = mRegisterEmailView.getText().toString();
         String password = mRegisterPasswordView.getText().toString();
-        String confirmPassword = mRegisterConfirmPasswordView.getText().toString();
+        //String confirmPassword = mRegisterConfirmPasswordView.getText().toString();
         String userName = mUserNameView.getText().toString();
 
         boolean cancel = false;
@@ -212,11 +216,13 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         }
 
         // Compare passwords
+        /*
         if (!password.equals(confirmPassword)) {
             mRegisterConfirmPasswordView.setError(getString(R.string.error_pass_not_equal));
             focusView = mRegisterConfirmPasswordView;
             cancel = true;
         }
+        */
 
         // Check for a valid password.
         if (TextUtils.isEmpty(password)) {
@@ -230,6 +236,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         }
 
         // Check for a valid confirm password.
+        /*
         if (TextUtils.isEmpty(confirmPassword)) {
             mRegisterConfirmPasswordView.setError(getString(R.string.error_field_required));
             focusView = mRegisterConfirmPasswordView;
@@ -239,6 +246,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             focusView = mRegisterConfirmPasswordView;
             cancel = true;
         }
+        */
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(registerEmail)) {
@@ -438,10 +446,55 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             usuarios.setSenha(mPassword);
             usuarios.setEstado("1");
             dados.inserirUsuario(usuarios);
+            //fin inserir usuario
+
+            //inserimos categorias
+            String cod_usuario = "";
+            Cursor cursor = dados.ObterUsuarioConectado();
+            if(cursor.moveToFirst()){
+                cod_usuario = cursor.getString(1);
+            }
+
+            Categorias categorias = new Categorias();
+            categorias.setCod_usuario(cod_usuario);
+            categorias.setNome("Alimentação");
+            categorias.setTp_lancamento("d");
+            dados.inserirCategoria(categorias);
+
+            Categorias categorias1 = new Categorias();
+            categorias1.setCod_usuario(cod_usuario);
+            categorias1.setNome("Carro");
+            categorias1.setTp_lancamento("d");
+            dados.inserirCategoria(categorias1);
+
+            Categorias categorias2 = new Categorias();
+            categorias2.setCod_usuario(cod_usuario);
+            categorias2.setNome("Lazer");
+            categorias2.setTp_lancamento("d");
+            dados.inserirCategoria(categorias2);
+
+            Categorias categorias3 = new Categorias();
+            categorias3.setCod_usuario(cod_usuario);
+            categorias3.setNome("Salário");
+            categorias3.setTp_lancamento("r");
+            dados.inserirCategoria(categorias3);
+
+            Categorias categorias4 = new Categorias();
+            categorias4.setCod_usuario(cod_usuario);
+            categorias4.setNome("Pensão");
+            categorias4.setTp_lancamento("r");
+            dados.inserirCategoria(categorias4);
+
+            Categorias categorias5 = new Categorias();
+            categorias5.setCod_usuario(cod_usuario);
+            categorias5.setNome("Aluguel");
+            categorias5.setTp_lancamento("r");
+            dados.inserirCategoria(categorias5);
+            // fin inserir catergorias
 
             Intent i = new Intent(RegisterActivity.this, ExtratoActivity.class);
             startActivity(i);
-            //fin inserir usuario
+
             return true;
         }
 
@@ -456,8 +509,8 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
                 mRegisterPasswordView.setError(getString(R.string.error_incorrect_password));
                 mRegisterPasswordView.requestFocus();
 
-                mRegisterConfirmPasswordView.setError(getString(R.string.error_incorrect_password));
-                mRegisterPasswordView.requestFocus();
+                //mRegisterConfirmPasswordView.setError(getString(R.string.error_incorrect_password));
+                //mRegisterPasswordView.requestFocus();
             }
         }
 

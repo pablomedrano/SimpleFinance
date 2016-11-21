@@ -8,15 +8,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.provider.BaseColumns;
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import java.util.ArrayList;
 
 import br.com.mefti.simplefinance.sqlite.ContratoSF.*;
 import br.com.mefti.simplefinance.modelo.*;
-import br.com.mefti.simplefinance.ui.ExtratoDespesasCursorAdapter;
-
 
 /**
  * Created by a_med on 13/10/2016.
@@ -142,6 +139,7 @@ public class BaseDadosSF extends SQLiteOpenHelper {
                 Tabelas.USUARIO, Usuario.ESTADO);
         String[] selectionArgs = {estado};
         Cursor cursor = db.rawQuery(sql, selectionArgs);
+
         return cursor;
     }
 
@@ -168,6 +166,17 @@ public class BaseDadosSF extends SQLiteOpenHelper {
         DatabaseUtils.dumpCursor(cursor);
         return cursor;
     }
+
+    public void UpdateUsuarioPorCodUsuario(String cod_usuario, String nome, String senha){
+        db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Usuario.NOME, nome);
+        values.put(Usuario.SENHA, senha);
+
+        db.update(Tabelas.USUARIO, values, Usuario.COD_USUARIO+"=?", new String[]{cod_usuario});
+        db.close();
+    }
+
     //fin Operacoes Usuario
 
     //Inicio Operacoes Categoria
@@ -385,6 +394,30 @@ public class BaseDadosSF extends SQLiteOpenHelper {
         String[] selectionArgs = {cod_usuario};
         Cursor cursor = db.rawQuery(sql, selectionArgs);
         Log.d("Lancamentos por usuario", "Lancamentos por usuario");
+        DatabaseUtils.dumpCursor(cursor);
+        db.close();
+        return cursor;
+    }
+
+    public Cursor ObterLancamentosPeloFiltroSemDescricao(String cod_categoria, long data1, long data2){
+        db = this.getReadableDatabase();
+        String sql = String.format("SELECT * FROM %s WHERE %s=? AND %s BETWEEN ? AND ? ORDER BY %s ASC",
+                Tabelas.LANCAMENTO, Lancamento.COD_CATEGORIA, Lancamento.DATA, Lancamento.DATA);
+        String[] selectionArgs = {cod_categoria, String.valueOf(data1), String.valueOf(data2)};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        Log.d("Lancamentos filtro1", "Lancamentos filtro1");
+        DatabaseUtils.dumpCursor(cursor);
+        db.close();
+        return cursor;
+    }
+
+    public Cursor ObterLancamentosPeloFiltroComDescricao(String cod_categoria, String descricao, long data1, long data2){
+        db = this.getReadableDatabase();
+        String sql = String.format("SELECT * FROM %s WHERE %s=? AND %s=? AND %s BETWEEN ? AND ? ORDER BY %s ASC",
+                Tabelas.LANCAMENTO, Lancamento.COD_CATEGORIA, Lancamento.DESCRICAO, Lancamento.DATA, Lancamento.DATA);
+        String[] selectionArgs = {cod_categoria, descricao, String.valueOf(data1), String.valueOf(data2)};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        Log.d("Lancamentos filtro2", "Lancamentos filtro2");
         DatabaseUtils.dumpCursor(cursor);
         db.close();
         return cursor;

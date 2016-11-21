@@ -45,5 +45,7 @@
     <string name="title_activity_categoria_atualizar_remover">CategoriaAtualizarRemoverActivity
     </string>
     <string name="title_activity_lancamento_editar_remover">Editar ou Remover Lancamento</string>
+    <string name="title_activity_resultado_filtro_lancamento">ResultadoFiltroLancamentoActivity
+    </string>
 
 </resources>

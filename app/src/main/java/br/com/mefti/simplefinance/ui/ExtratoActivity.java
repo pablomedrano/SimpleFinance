@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import br.com.mefti.simplefinance.R;
 import br.com.mefti.simplefinance.sqlite.BaseDadosSF;
@@ -46,8 +47,8 @@ public class ExtratoActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent extrato = new Intent(ExtratoActivity.this, LancamentoActivity.class);
+                startActivity(extrato);
             }
         });
 
@@ -138,6 +139,8 @@ public class ExtratoActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.extrato_filtrar) {
+            Intent register = new Intent(ExtratoActivity.this, FiltrarLancamentoActivity.class);
+            startActivity(register);
             return true;
         }
 
@@ -156,12 +159,11 @@ public class ExtratoActivity extends AppCompatActivity
         } else if (id == R.id.nav_Categoria) {
             Intent register = new Intent(ExtratoActivity.this, CategoriaActivity.class);
             startActivity(register);
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_exportar_extrato) {
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
+        } else if (id == R.id.nav_meus_dados) {
+            Intent register = new Intent(ExtratoActivity.this, MeusDadosActivity.class);
+            startActivity(register);
         } else if (id == R.id.nav_Desconectar) {
             Cursor cursor = dados.ObterUsuarioConectado();
             if (cursor.moveToFirst()){

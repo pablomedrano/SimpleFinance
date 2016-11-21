@@ -39,9 +39,9 @@ public class CategoriaEditarRemoverActivity extends AppCompatActivity {
             //Toast.makeText(CategoriaEditarRemoverActivity.this, cursor.getString(3), Toast.LENGTH_SHORT).show();
             RadioButton radioButtonReceita = (RadioButton) findViewById(R.id.radio_receita_edit_delete);
             RadioButton radioButtonDespesa = (RadioButton) findViewById(R.id.radio_despesa_edit_delete);
-            if (cursor.getString(4) == "r"){
+            if (cursor.getString(4).equals("r")){
                 radioButtonReceita.setChecked(true);
-            }else if (cursor.getString(4) == "d"){
+            }else if (cursor.getString(4).equals("d")){
                 radioButtonDespesa.setChecked(true);
             }
 

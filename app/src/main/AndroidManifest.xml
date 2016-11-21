@@ -33,28 +33,41 @@
 
         <activity
             android:name=".ui.ExtratoActivity"
-            android:label="@string/title_activity_extrato"
+            android:screenOrientation="portrait"
+            android:label="Simple Finance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.LancamentoActivity"
-            android:label="@string/title_activity_rec_des"
+            android:screenOrientation="portrait"
+            android:label="Adicionar Lançamento"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.CategoriaActivity"
-            android:label="@string/title_activity_categoria"
+            android:screenOrientation="portrait"
+            android:label="Categorias"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.CategoriaRegActivity"
-            android:label="@string/title_activity_categoria_reg"
+            android:screenOrientation="portrait"
+            android:label="Adicionar Categoria"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.CategoriaEditarRemoverActivity"
-            android:label="@string/title_activity_categoria_atualizar_remover"
+            android:screenOrientation="portrait"
+            android:label="Editar ou Remover Categoria"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.LancamentoEditarRemoverActivity"
-            android:label="@string/title_activity_lancamento_editar_remover"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:screenOrientation="portrait"
+            android:label="Editar ou Remover Lançamento"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.FiltrarLancamentoActivity" />
+        <activity
+            android:name=".ui.ResultadoFiltroLancamentoActivity"
+            android:screenOrientation="portrait"
+            android:label="Lançamentos Filtrados "
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.MeusDadosActivity"></activity>
     </application>
 
 </manifest>

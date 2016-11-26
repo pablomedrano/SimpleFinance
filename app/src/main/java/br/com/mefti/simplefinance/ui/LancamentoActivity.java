@@ -400,7 +400,7 @@ public class LancamentoActivity extends AppCompatActivity {
                 startActivity(extrato);
 
             }else{
-                Toast.makeText(LancamentoActivity.this, "Descricao e valor sao dados obrigratorios", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LancamentoActivity.this, "Descrição e valor sao dados obrigratórios", Toast.LENGTH_SHORT).show();
             }
         }
         return super.onOptionsItemSelected(item);

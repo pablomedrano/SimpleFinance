@@ -73,10 +73,14 @@ public class CategoriaRegActivity extends AppCompatActivity {
             }else if(despesa){
                 categorias.setTp_lancamento("d");
             }
-            dados.inserirCategoria(categorias);
 
-            Intent extrato = new Intent(CategoriaRegActivity.this, ExtratoActivity.class);
-            startActivity(extrato);
+            if(nCategoria.equals("")){
+                Toast.makeText(getApplicationContext(), "Nome Categoria e dado obrigatório!", Toast.LENGTH_LONG).show();
+            }else{
+                dados.inserirCategoria(categorias);
+                Intent extrato = new Intent(CategoriaRegActivity.this, ExtratoActivity.class);
+                startActivity(extrato);
+            }
         }
         return super.onOptionsItemSelected(item);
     }

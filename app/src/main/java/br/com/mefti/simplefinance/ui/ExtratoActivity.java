@@ -1,11 +1,10 @@
 package br.com.mefti.simplefinance.ui;
 
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTabHost;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -19,8 +18,23 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import br.com.mefti.simplefinance.R;
 import br.com.mefti.simplefinance.sqlite.BaseDadosSF;
+import br.com.mefti.simplefinance.sqlite.ContratoSF;
+import jxl.Workbook;
+import jxl.WorkbookSettings;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
 
 
 public class ExtratoActivity extends AppCompatActivity
@@ -160,7 +174,8 @@ public class ExtratoActivity extends AppCompatActivity
             Intent register = new Intent(ExtratoActivity.this, CategoriaActivity.class);
             startActivity(register);
         } else if (id == R.id.nav_exportar_extrato) {
-
+            exportToExcel();
+            Toast.makeText(getApplicationContext(), "Arquivo Armacenado em sdcard/SimpleFinance/SimpleFinance.xls", Toast.LENGTH_LONG).show();
         } else if (id == R.id.nav_meus_dados) {
             Intent register = new Intent(ExtratoActivity.this, MeusDadosActivity.class);
             startActivity(register);
@@ -178,6 +193,120 @@ public class ExtratoActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void exportToExcel() {
+        final String fileName = "SimpleFinance.xls";
+
+        //Saving file in external storage
+        File sdCard = Environment.getExternalStorageDirectory();
+        File directory = new File(sdCard.getAbsolutePath() + "/SimpleFinance");
+
+        //create directory if not exist
+        if(!directory.isDirectory()){
+            directory.mkdirs();
+        }
+
+        //file path
+        File file = new File(directory, fileName);
+
+        WorkbookSettings wbSettings = new WorkbookSettings();
+        wbSettings.setLocale(new Locale("en", "EN"));
+        WritableWorkbook workbook;
+
+        //consultando datos
+        String cod_usuario = "";
+        Cursor cursor = dados.ObterUsuarioConectado();
+        if(cursor.moveToFirst()){
+            cod_usuario = cursor.getString(1);
+        }
+        cursor.close();
+        Cursor cursorLancamentos = null;
+        cursorLancamentos = dados.ObterLancamentosPorCodUsuario(cod_usuario);
+
+
+        try {
+            workbook = Workbook.createWorkbook(file, wbSettings);
+            //Excel sheet name. 0 represents first sheet
+            WritableSheet sheet = workbook.createSheet("Lancamentos", 0);
+
+            try {
+                sheet.addCell(new Label(0, 0, "TIPO DE LANÇAMENTO ")); // column and row
+                sheet.addCell(new Label(1, 0, "CATEGORIA"));
+                sheet.addCell(new Label(2, 0, "DESCRIÇÃO"));
+                sheet.addCell(new Label(3, 0, "DATA"));
+                sheet.addCell(new Label(4, 0, "VALOR"));
+                sheet.addCell(new Label(5, 0, "DATA PREVISTA"));
+                sheet.addCell(new Label(6, 0, "VALOR PREVISTO"));
+                sheet.addCell(new Label(7, 0, "OBSERVAÇÃO"));
+
+
+                if (cursorLancamentos.moveToFirst()) {
+                    do {
+                        String tipoLancamento = "";
+                        if (cursorLancamentos.getString(cursorLancamentos.getColumnIndex(ContratoSF.Lancamento.TP_LANCAMENTO)).equals("r")) {
+                            tipoLancamento = "Receita";
+                        }
+                        else{
+                            tipoLancamento = "Despesa";
+                        }
+                        String categoria = dados.ObterNomeCategoriaPorCodCategoria(cursorLancamentos.getString(cursorLancamentos.getColumnIndex(ContratoSF.Lancamento.COD_CATEGORIA)));
+                        String descricao = cursorLancamentos.getString(cursorLancamentos.getColumnIndex(ContratoSF.Lancamento.DESCRICAO));
+                        long data = cursorLancamentos.getLong(cursorLancamentos.getColumnIndex(ContratoSF.Lancamento.DATA));
+                        //Convertendo data
+                        Date d = new Date (data);
+                        DateFormat targetFormat = new SimpleDateFormat("dd/MMM/y");
+                        String formattedDate = null;
+                        try {
+                            formattedDate = targetFormat.format(d);
+                        } catch (Exception e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                        String valor = cursorLancamentos.getString(cursorLancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR));
+                        long dataP = cursorLancamentos.getLong(cursorLancamentos.getColumnIndex(ContratoSF.Lancamento.PREVISAO_DATA));
+                        //Convertendo data
+                        Date dP = new Date (dataP);
+                        DateFormat targetFormatP = new SimpleDateFormat("dd/MMM/y");
+                        String formattedDateP = null;
+                        try {
+                            formattedDateP = targetFormatP.format(dP);
+                        } catch (Exception e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                        String valorP = cursorLancamentos.getString(cursorLancamentos.getColumnIndex(ContratoSF.Lancamento.PREVISAO_VALOR));
+                        String observacao = cursorLancamentos.getString(cursorLancamentos.getColumnIndex(ContratoSF.Lancamento.OBSERVACAO));
+
+                        int i = cursorLancamentos.getPosition() + 1;
+                        sheet.addCell(new Label(0, i, tipoLancamento));
+                        sheet.addCell(new Label(1, i, categoria));
+                        sheet.addCell(new Label(2, i, descricao));
+                        sheet.addCell(new Label(3, i, formattedDate));
+                        sheet.addCell(new Label(4, i, valor));
+                        sheet.addCell(new Label(5, i, formattedDateP));
+                        sheet.addCell(new Label(6, i, valorP));
+                        sheet.addCell(new Label(7, i, observacao));
+
+                    } while (cursorLancamentos.moveToNext());
+                }
+                //closing cursor
+                cursorLancamentos.close();
+                cursor.close();
+            } catch (RowsExceededException e) {
+                e.printStackTrace();
+            } catch (WriteException e) {
+                e.printStackTrace();
+            }
+            workbook.write();
+            try {
+                workbook.close();
+            } catch (WriteException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -17,7 +17,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lancamento" />
+        android:text="Lançamento" />
 
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
@@ -49,6 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/nome_categoria"
+            android:textColor="#2F6DA0"
             android:hint="Nome Categoria"/>
     </android.support.design.widget.TextInputLayout>
 

@@ -17,14 +17,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lancamento" />
+        android:text="Lançamento" />
 
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/opcoes_lancamento_edit_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="1">
 
         <RadioButton
             android:id="@+id/radio_receita_edit_delete"
@@ -32,7 +33,8 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
             android:checked="true"
-            android:text="Receita" />
+            android:text="Receita"
+            android:layout_weight="0.36" />
 
         <RadioButton
             android:id="@+id/radio_despesa_edit_delete"
@@ -49,7 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/nome_categoria_edit_delete"
-            android:hint="Nome Categoria"/>
+            android:textColor="#2F6DA0"
+            android:hint="Nome da Categoria"/>
     </android.support.design.widget.TextInputLayout>
 
 </LinearLayout>

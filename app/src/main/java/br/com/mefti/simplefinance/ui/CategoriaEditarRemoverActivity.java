@@ -96,7 +96,7 @@ public class CategoriaEditarRemoverActivity extends AppCompatActivity {
         if (id == R.id.cat_reg_delete) {
             AlertDialog.Builder dialogo1 = new AlertDialog.Builder(this);
             dialogo1.setTitle("Importante");
-            dialogo1.setMessage("Os registros dos lancamentos assim como da categoria seram apagados, deseja confirmar?");
+            dialogo1.setMessage("Os registros dos lançamentos assim como da categoria serão apagados, deseja confirmar?");
             dialogo1.setCancelable(false);
             dialogo1.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialogo1, int id) {

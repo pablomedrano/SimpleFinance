@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,18 +12,29 @@
     tools:context="br.com.mefti.simplefinance.ui.LoginActivity"
     android:weightSum="1">
 
-    <!-- Login progress -->
-    <ScrollView
-        android:id="@+id/login_form"
-        android:layout_width="match_parent"
-        android:layout_height="234dp"
-        android:layout_weight="0.98">
 
-        <LinearLayout
+    <!-- Login progress -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:id="@+id/imageView2"
+        android:layout_weight="0.24" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="192dp"
+        android:id="@+id/imageView3"
+        android:background="@drawable/background"
+        android:layout_weight="0.29" />
+
+
+    <LinearLayout
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="1">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -31,17 +43,19 @@
                 <AutoCompleteTextView
                     android:id="@+id/email"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="44dp"
                     android:hint="@string/prompt_email"
+                    android:textColorHighlight="#2F6DA0"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
+                    android:textColor="#2F6DA0"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="44dp">
 
                 <EditText
                     android:id="@+id/password"
@@ -52,6 +66,7 @@
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
+                    android:textColor="#2F6DA0"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -59,22 +74,30 @@
 
             <Button
                 android:id="@+id/email_sign_in_button"
-                style="?android:textAppearanceSmall"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:background="#2F6DA0"
                 android:text="@string/action_sign_in"
-                android:textStyle="bold" />
+                android:textSize="20sp"
+                android:textStyle="normal"
+                android:textColorLink="@android:color/holo_blue_dark" />
 
-        </LinearLayout>
-    </ScrollView>
 
-    <Button
-        android:text="@string/login_register_user"
-        style="?android:textAppearanceSmall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/login_register_user_button" />
+        <Button
+            android:text="@string/login_register_user"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8sp"
+            android:background="#CDCDD0"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textColor="#808080"
+            android:id="@+id/login_register_user_button" />
+
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/login_progress"

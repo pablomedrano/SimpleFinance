@@ -31,6 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/user_name"
+                    android:textColor="#2F6DA0"
                     android:hint="@string/name_user"/>
             </android.support.design.widget.TextInputLayout>
 
@@ -44,6 +45,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
+                    android:textColor="#2F6DA0"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -51,7 +53,8 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:textColor="#2F6DA0">
 
                 <EditText
                     android:id="@+id/register_password"
@@ -67,17 +70,17 @@
 
             </android.support.design.widget.TextInputLayout>
 
-
-
             <Button
                 android:id="@+id/register_button"
-                style="?android:textAppearanceSmall"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/register_user"
-                android:textStyle="bold"
-                android:layout_weight="8.56" />
+                android:background="#2F6DA0"
+                android:text="@string/action_sign_in"
+                android:textSize="20sp"
+                android:textStyle="normal"
+                android:textColorLink="@android:color/holo_blue_dark"/>
 
 
         </LinearLayout>

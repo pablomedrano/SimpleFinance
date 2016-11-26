@@ -6,5 +6,5 @@
         android:orderInCategory="100"
         android:icon="@drawable/ic_save"
         android:title="Opcion 2"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 </menu>

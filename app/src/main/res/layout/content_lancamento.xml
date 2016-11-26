@@ -18,13 +18,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lancamento" />
+        android:text="Lançamento" />
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/opcoes_lancamento1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="1">
 
         <RadioButton
             android:id="@+id/radio_receita1"
@@ -32,7 +33,8 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
             android:checked="true"
-            android:text="Receita" />
+            android:text="Receita"
+            android:layout_weight="0.36" />
 
         <RadioButton
             android:id="@+id/radio_despesa1"
@@ -51,11 +53,13 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:textColor="#2F6DA0">
 
         <Spinner
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:textColor="#2F6DA0"
             android:id="@+id/categoria_lancamento" />
 
         <android.support.design.widget.FloatingActionButton
@@ -77,7 +81,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/descricao_lancamento"
-            android:hint="Descricao"/>
+            android:textColor="#2F6DA0"
+            android:hint="Descrição"/>
     </android.support.design.widget.TextInputLayout>
 
     <!--- Valor -->
@@ -89,6 +94,7 @@
             android:layout_height="match_parent"
             android:id="@+id/valor_lancamento"
             android:inputType="numberDecimal"
+            android:textColor="#2F6DA0"
             android:hint="Valor"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -110,6 +116,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:textColor="#2F6DA0"
             android:id="@+id/texto_data_lancamento" />
     </LinearLayout>
 
@@ -123,13 +130,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/repetir_lancamento"
+        android:textColor="#2F6DA0"
         android:entries="@array/array_repetir"/>
 
     <!-- Previsao -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Previsao (Lancamento futuro)" />
+        android:text="Previsao (Lançamento futuro)" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -139,6 +147,7 @@
             android:layout_height="match_parent"
             android:id="@+id/valor_previsto_lancamento"
             android:inputType="numberDecimal"
+            android:textColor="#2F6DA0"
             android:hint="Valor"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -159,6 +168,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:textColor="#2F6DA0"
             android:id="@+id/texto_data_prevista_lancamento" />
     </LinearLayout>
 
@@ -171,7 +181,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/observacao_lancamento"
-            android:hint="Observacao"/>
+            android:textColor="#2F6DA0"
+            android:hint="Observação"/>
     </android.support.design.widget.TextInputLayout>
 
 

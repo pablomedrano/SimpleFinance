@@ -18,6 +18,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="72dp"
         android:text="New Text"
+        android:textColor="#2F6DA0"
         android:textAppearance="?textAppearanceListItem"
         tools:text="Categoria 1" />
 

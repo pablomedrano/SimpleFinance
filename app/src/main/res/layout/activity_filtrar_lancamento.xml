@@ -16,13 +16,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lancamento" />
+        android:text="Lançamento" />
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/opcoes_lancamento2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="1">
 
         <RadioButton
             android:id="@+id/radio_receita2"
@@ -30,7 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
             android:checked="true"
-            android:text="Receita" />
+            android:text="Receita"
+            android:layout_weight="0.36" />
 
         <RadioButton
             android:id="@+id/radio_despesa2"
@@ -68,7 +70,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/descricao_lancamento1"
-            android:hint="Descricao"/>
+            android:textColor="#2F6DA0"
+            android:hint="Descrição"/>
     </android.support.design.widget.TextInputLayout>
 
     <!-- data -->
@@ -110,11 +113,18 @@
             android:id="@+id/texto_data_periodo1" />
     </LinearLayout>
 
+
     <Button
-        android:text="FILTRAR"
+        android:id="@+id/button_filtrar"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button_filtrar" />
+        android:layout_marginTop="16dp"
+        android:background="#2F6DA0"
+        android:textSize="20sp"
+        android:textStyle="normal"
+        android:text="FILTRAR"
+        android:textColorLink="@android:color/holo_blue_dark" />
 
 
 </LinearLayout>

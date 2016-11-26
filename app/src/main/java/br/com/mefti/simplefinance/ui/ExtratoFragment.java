@@ -4,6 +4,7 @@ package br.com.mefti.simplefinance.ui;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -99,10 +100,14 @@ public class ExtratoFragment extends Fragment {
                     TextView detailstv = new TextView(getActivity());
                     detailstv.setText(lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.DESCRICAO)));
                     tr.addView(detailstv);
-
                     TextView valstv = new TextView(getActivity());
-                    valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
-                    valstv.setTextColor(Color.parseColor("#0000CC"));
+                    if(lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.TP_LANCAMENTO)).equals("d")){
+                        valstv.setText(" R$ - " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setTextColor(Color.parseColor("#FF0000"));
+                    }else{
+                        valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setTextColor(Color.parseColor("#808000"));
+                    }
                     tr.addView(valstv);
                     tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
                 }
@@ -125,8 +130,13 @@ public class ExtratoFragment extends Fragment {
                     tr.addView(detailstv);
 
                     TextView valstv = new TextView(getActivity());
-                    valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
-                    valstv.setTextColor(Color.parseColor("#0000CC"));
+                    if(lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.TP_LANCAMENTO)).equals("d")){
+                        valstv.setText(" R$ - " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setTextColor(Color.parseColor("#FF0000"));
+                    }else{
+                        valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setTextColor(Color.parseColor("#808000"));
+                    }
                     tr.addView(valstv);
                     tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
                 }
@@ -149,8 +159,13 @@ public class ExtratoFragment extends Fragment {
                     tr.addView(detailstv);
 
                     TextView valstv = new TextView(getActivity());
-                    valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
-                    valstv.setTextColor(Color.parseColor("#0000CC"));
+                    if(lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.TP_LANCAMENTO)).equals("d")){
+                        valstv.setText(" R$ - " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setTextColor(Color.parseColor("#FF0000"));
+                    }else{
+                        valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setTextColor(Color.parseColor("#808000"));
+                    }
                     tr.addView(valstv);
                     tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
                 }
@@ -173,8 +188,13 @@ public class ExtratoFragment extends Fragment {
                     tr.addView(detailstv);
 
                     TextView valstv = new TextView(getActivity());
-                    valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
-                    valstv.setTextColor(Color.parseColor("#0000CC"));
+                    if(lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.TP_LANCAMENTO)).equals("d")){
+                        valstv.setText(" R$ - " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setTextColor(Color.parseColor("#FF0000"));
+                    }else{
+                        valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setTextColor(Color.parseColor("#808000"));
+                    }
                     tr.addView(valstv);
                     tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
                 }
@@ -197,8 +217,13 @@ public class ExtratoFragment extends Fragment {
                     tr.addView(detailstv);
 
                     TextView valstv = new TextView(getActivity());
-                    valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
-                    valstv.setTextColor(Color.parseColor("#0000CC"));
+                    if(lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.TP_LANCAMENTO)).equals("d")){
+                        valstv.setText(" R$ - " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setTextColor(Color.parseColor("#FF0000"));
+                    }else{
+                        valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setTextColor(Color.parseColor("#808000"));
+                    }
                     tr.addView(valstv);
                     tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
                 }
@@ -217,11 +242,15 @@ public class ExtratoFragment extends Fragment {
 
             TextView detailstv = new TextView(getActivity());
             detailstv.setText("Total");
+            detailstv.setTypeface(null, Typeface.BOLD);
+            detailstv.setTextSize(20);
             tr.addView(detailstv);
 
             TextView valstv = new TextView(getActivity());
             valstv.setText(" R$ " + saldo);
-            valstv.setTextColor(Color.parseColor("#0000CC"));
+            //valstv.setTextColor(Color.parseColor("#0000CC"));
+            valstv.setTypeface(null, Typeface.BOLD);
+            valstv.setTextSize(20);
             tr.addView(valstv);
             tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         }finally {

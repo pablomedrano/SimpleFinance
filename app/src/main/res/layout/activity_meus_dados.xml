@@ -18,11 +18,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/user_name_update"
+            android:textColor="#2F6DA0"
             android:hint="@string/name_user"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
+        android:textColor="#2F6DA0"
         android:layout_height="wrap_content">
 
         <EditText
@@ -40,9 +42,15 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:text="Salvar"
+        android:id="@+id/button_update"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button_update" />
+        android:layout_marginTop="16dp"
+        android:background="#2F6DA0"
+        android:text="Salvar"
+        android:textSize="20sp"
+        android:textStyle="normal"
+        android:textColorLink="@android:color/holo_blue_dark" />
 
 </LinearLayout>

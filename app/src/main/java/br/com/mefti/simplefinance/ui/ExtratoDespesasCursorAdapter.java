@@ -48,7 +48,7 @@ public class ExtratoDespesasCursorAdapter extends CursorAdapter{
 
         // Get valores.
         String descricao = cursor.getString(cursor.getColumnIndex(ContratoSF.Lancamento.DESCRICAO));
-        String valor = cursor.getString(cursor.getColumnIndex(ContratoSF.Lancamento.VALOR));
+        Double valor = cursor.getDouble(cursor.getColumnIndex(ContratoSF.Lancamento.VALOR));
         String categoria = cursor.getString(cursor.getColumnIndex(ContratoSF.Lancamento.COD_CATEGORIA));
         long data = cursor.getLong(cursor.getColumnIndex(ContratoSF.Lancamento.DATA));
 
@@ -79,7 +79,7 @@ public class ExtratoDespesasCursorAdapter extends CursorAdapter{
         // Setup.
         descricaoText.setText(descricao);
         DecimalFormat format = new DecimalFormat("0.00");
-        String formattedValor = format.format(Double.parseDouble(valor));
+        String formattedValor = format.format(valor);
         valorText.setText("Valor: R$ " + formattedValor);
         categoriaText.setText("Categoria: " + nCategoria);
         dataText.setText("Data: " + formattedDate);
@@ -100,5 +100,7 @@ public class ExtratoDespesasCursorAdapter extends CursorAdapter{
                     }
                 });
                 */
+
+
     }
 }

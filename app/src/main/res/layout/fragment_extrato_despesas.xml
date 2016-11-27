@@ -4,10 +4,32 @@
     android:layout_height="match_parent"
     tools:context="br.com.mefti.simplefinance.ui.ExtratoDespesasFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="Total Despesas: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/total_despesas"
+            android:textSize="17dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:text="R$ 154"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/monto_total_despesas"
+            android:textSize="15dp" />
+
+    </LinearLayout>
+
     <ListView
         android:id="@+id/extrato_despesas_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null"/>
+        android:divider="@null"
+        android:layout_marginTop="15dp"/>
 
 </FrameLayout>

@@ -14,6 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.text.DecimalFormat;
 
 import br.com.mefti.simplefinance.R;
 import br.com.mefti.simplefinance.sqlite.BaseDadosSF;
@@ -63,11 +68,31 @@ public class ExtratoDespesasFragment extends Fragment {
         // Instancia da base de dados
         dados = new BaseDadosSF(getActivity());
 
+        //Total despesas
+        String c_usuario = "";
+        double sumDespesas = 0.0;
+        Cursor usuario = dados.ObterUsuarioConectado();
+        if(usuario.moveToFirst()){
+            c_usuario = usuario.getString(1);
+        }
+        Cursor cursor3 = dados.ObterTodasAsDespesasPorUsuario(c_usuario);
+        while (cursor3.moveToNext()){
+            sumDespesas += cursor3.getDouble(6);
+        }
+        TextView totalDespesas = (TextView) root.findViewById(R.id.monto_total_despesas);
+        DecimalFormat format = new DecimalFormat("0.00");
+        String formattedValor = format.format(sumDespesas);
+        totalDespesas.setText("R$ " + formattedValor);
+
         // Carga de datos
         loadDespesas();
 
+
+
+
         return root;
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

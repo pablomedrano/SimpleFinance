@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -102,10 +103,14 @@ public class ExtratoFragment extends Fragment {
                     tr.addView(detailstv);
                     TextView valstv = new TextView(getActivity());
                     if(lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.TP_LANCAMENTO)).equals("d")){
-                        valstv.setText(" R$ - " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        DecimalFormat format = new DecimalFormat("0.00");
+                        String formattedValor = format.format(lancamentos.getDouble(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setText(" R$ - " + formattedValor);
                         valstv.setTextColor(Color.parseColor("#FF0000"));
                     }else{
-                        valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        DecimalFormat format = new DecimalFormat("0.00");
+                        String formattedValor = format.format(lancamentos.getDouble(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setText(" R$ " + formattedValor);
                         valstv.setTextColor(Color.parseColor("#808000"));
                     }
                     tr.addView(valstv);
@@ -131,10 +136,14 @@ public class ExtratoFragment extends Fragment {
 
                     TextView valstv = new TextView(getActivity());
                     if(lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.TP_LANCAMENTO)).equals("d")){
-                        valstv.setText(" R$ - " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        DecimalFormat format = new DecimalFormat("0.00");
+                        String formattedValor = format.format(lancamentos.getDouble(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setText(" R$ - " + formattedValor);
                         valstv.setTextColor(Color.parseColor("#FF0000"));
                     }else{
-                        valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        DecimalFormat format = new DecimalFormat("0.00");
+                        String formattedValor = format.format(lancamentos.getDouble(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setText(" R$ " + formattedValor);
                         valstv.setTextColor(Color.parseColor("#808000"));
                     }
                     tr.addView(valstv);
@@ -160,10 +169,14 @@ public class ExtratoFragment extends Fragment {
 
                     TextView valstv = new TextView(getActivity());
                     if(lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.TP_LANCAMENTO)).equals("d")){
-                        valstv.setText(" R$ - " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        DecimalFormat format = new DecimalFormat("0.00");
+                        String formattedValor = format.format(lancamentos.getDouble(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setText(" R$ - " + formattedValor);
                         valstv.setTextColor(Color.parseColor("#FF0000"));
                     }else{
-                        valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        DecimalFormat format = new DecimalFormat("0.00");
+                        String formattedValor = format.format(lancamentos.getDouble(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setText(" R$ " + formattedValor);
                         valstv.setTextColor(Color.parseColor("#808000"));
                     }
                     tr.addView(valstv);
@@ -189,10 +202,14 @@ public class ExtratoFragment extends Fragment {
 
                     TextView valstv = new TextView(getActivity());
                     if(lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.TP_LANCAMENTO)).equals("d")){
-                        valstv.setText(" R$ - " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        DecimalFormat format = new DecimalFormat("0.00");
+                        String formattedValor = format.format(lancamentos.getDouble(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setText(" R$ - " + formattedValor);
                         valstv.setTextColor(Color.parseColor("#FF0000"));
                     }else{
-                        valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        DecimalFormat format = new DecimalFormat("0.00");
+                        String formattedValor = format.format(lancamentos.getDouble(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setText(" R$ " + formattedValor);
                         valstv.setTextColor(Color.parseColor("#808000"));
                     }
                     tr.addView(valstv);
@@ -218,10 +235,14 @@ public class ExtratoFragment extends Fragment {
 
                     TextView valstv = new TextView(getActivity());
                     if(lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.TP_LANCAMENTO)).equals("d")){
-                        valstv.setText(" R$ - " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        DecimalFormat format = new DecimalFormat("0.00");
+                        String formattedValor = format.format(lancamentos.getDouble(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setText(" R$ - " + formattedValor);
                         valstv.setTextColor(Color.parseColor("#FF0000"));
                     }else{
-                        valstv.setText(" R$ " + lancamentos.getString(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        DecimalFormat format = new DecimalFormat("0.00");
+                        String formattedValor = format.format(lancamentos.getDouble(lancamentos.getColumnIndex(ContratoSF.Lancamento.VALOR)));
+                        valstv.setText(" R$ " + formattedValor);
                         valstv.setTextColor(Color.parseColor("#808000"));
                     }
                     tr.addView(valstv);
@@ -247,7 +268,9 @@ public class ExtratoFragment extends Fragment {
             tr.addView(detailstv);
 
             TextView valstv = new TextView(getActivity());
-            valstv.setText(" R$ " + saldo);
+            DecimalFormat format = new DecimalFormat("#0.00");
+            String formattedValor = format.format(Double.parseDouble(saldo));
+            valstv.setText(" R$ " + formattedValor);
             //valstv.setTextColor(Color.parseColor("#0000CC"));
             valstv.setTypeface(null, Typeface.BOLD);
             valstv.setTextSize(20);

@@ -80,6 +80,7 @@ public class CategoriaRegActivity extends AppCompatActivity {
                 dados.inserirCategoria(categorias);
                 Intent extrato = new Intent(CategoriaRegActivity.this, ExtratoActivity.class);
                 startActivity(extrato);
+
             }
         }
         return super.onOptionsItemSelected(item);

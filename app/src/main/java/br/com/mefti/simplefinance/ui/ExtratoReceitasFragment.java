@@ -15,6 +15,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+
 import br.com.mefti.simplefinance.R;
 import br.com.mefti.simplefinance.sqlite.BaseDadosSF;
 import br.com.mefti.simplefinance.sqlite.ContratoSF;
@@ -64,8 +66,25 @@ public class ExtratoReceitasFragment extends Fragment {
         // Instancia da base de dados
         dados = new BaseDadosSF(getActivity());
 
+        //Total receitas
+        String c_usuario = "";
+        double sumReceitas = 0.0;
+        Cursor usuario = dados.ObterUsuarioConectado();
+        if(usuario.moveToFirst()){
+            c_usuario = usuario.getString(1);
+        }
+        Cursor cursor3 = dados.ObterTodasAsReceitasPorUsuario(c_usuario);
+        while (cursor3.moveToNext()){
+            sumReceitas += cursor3.getDouble(6);
+        }
+        TextView totalReceitas = (TextView) root.findViewById(R.id.monto_total_receitas);
+        DecimalFormat format = new DecimalFormat("0.00");
+        String formattedValor = format.format(sumReceitas);
+        totalReceitas.setText("R$ " + formattedValor);
+
         // Carga de datos
         loadReceitas();
+
 
         return root;
     }

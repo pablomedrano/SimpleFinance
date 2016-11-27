@@ -62,7 +62,7 @@ public class LancamentoEditarRemoverActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //butao para adicionar categoria
+        //botao para adicionar categoria
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.categoria_reg_lancamento_edit_delete);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,7 +158,7 @@ public class LancamentoEditarRemoverActivity extends AppCompatActivity {
             //carregando valor
             EditText valorLancamento = (EditText) findViewById(R.id.valor_lancamento_edit_delete);
             DecimalFormat formatValor = new DecimalFormat("0.00");
-            String formattedValor = formatValor.format(Double.parseDouble(cursor.getString(6)));
+            String formattedValor = formatValor.format(cursor.getDouble(6));
             valorLancamento.setText(formattedValor);
 
             //Carregando calendario
